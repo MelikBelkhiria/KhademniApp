@@ -12,6 +12,7 @@ import Profileofseekerforseeker from './Components/Ahmed/profileofseekerforseeke
 import ServicePoster3 from './Components/Yosr/ServicePoster3';
 import ServicePoster5 from './Components/Yosr/ServicePoster5';
 import ServiceSeeker3 from './Components/Yosr/ServiceSeeker3';
+import Search from './Components/Nour/Search'
 
 
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer  >
-      <Stack.Navigator initialRouteName="ServicePoster5">
+      <Stack.Navigator initialRouteName="Search">
         <Stack.Screen options={{headerShown:false}} name="ServicePoster" component={ServicePosterHome} />
         <Stack.Screen name="Confirmation" component={Confirmation} />
         <Stack.Screen name="RegistrationScreen" component={RegistrationScreen}/>
@@ -30,6 +31,8 @@ export default function App() {
         <Stack.Screen name="ServicePoster3" component={ServicePoster3}/>
         <Stack.Screen name="ServicePoster5" component={ServicePoster5}/>
         <Stack.Screen name="ServiceSeeker3" component={ServiceSeeker3}/>
+        <Stack.Screen name="Search" component={Search}/>
+
 
 
 

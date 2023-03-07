@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, S
 import { Feather } from '@expo/vector-icons';
 
 const jobs = [
-    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('./assets/cuisinier.png') },
-    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('./assets/jardinier.png') },
-    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('./assets/fmm.png') },
-    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('./assets/RIP.png') },
+    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('../../assets/cuisinier.jpg') },
+    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('../../assets/jardinier.jpg') },
+    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('../../assets/fmm.jpg') },
+    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('../../assets/RIP.jpg') },
 ];
 
 const JobCard = ({ job }) => {
@@ -24,7 +24,7 @@ const JobCard = ({ job }) => {
     );
 };
 
-const JobSearchPage = () => {
+const Search = () => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortLoc, setSortLoc] = useState('Lac2');
@@ -110,7 +110,7 @@ const JobSearchPage = () => {
                     onChangeText={handleSearch}
                 />
 
-                <TouchableOpacity style={styles.button}><Image resizeMode='contain' source={require('./assets/hc.png')} style={styles.img} /></TouchableOpacity>
+                <TouchableOpacity style={styles.button}><Image resizeMode='contain' source={require('../../assets/hc.jpg')} style={styles.img} /></TouchableOpacity>
             </View>
             <View style={styles.a}>
                 <View>
@@ -133,24 +133,13 @@ const JobSearchPage = () => {
                     )}
                 </View>
                 <View>
+                    
                     <TouchableOpacity onPress={toggleLocationsVisible} style={styles.cc}>
                         <Text style={styles.c}>{selectedLocation ? selectedLocation.location : 'Location'}</Text>
                         <Feather name={locationsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
                     </TouchableOpacity>
 
-                    {optionsVisible && (
-                        <ScrollView style={styles.d}>
-                            {options.map((job) => (
-                                <TouchableOpacity
-                                    key={job.id}
-                                    onPress={() => handleBothLocations(job)}
-                                    style={styles.e}
-                                >
-                                    <Text style={styles.f}>{job.location}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
-                    )}
+                   
                 </View>
 
 
@@ -318,4 +307,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default JobSearchPage;
+export default Search;
