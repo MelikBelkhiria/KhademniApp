@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, S
 import { Feather } from '@expo/vector-icons';
 
 const jobs = [
-    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('./assets/icon.png') },
-    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('./assets/favicon.png') },
-    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('./assets/splash.png') },
-    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('./assets/adaptive-icon.png') },
+    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('./assets/cuisinier.png') },
+    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('./assets/jardinier.png') },
+    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('./assets/fmm.png') },
+    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('./assets/RIP.png') },
 ];
 
 const JobCard = ({ job }) => {
@@ -27,7 +27,7 @@ const JobCard = ({ job }) => {
 const JobSearchPage = () => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
-    const [sortLoc,setSortLoc]=useState('Lac2');
+    const [sortLoc, setSortLoc] = useState('Lac2');
     const [selectedLocation, setSelectedLocation] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedOption, setSelectedOption] = useState(false);
@@ -57,16 +57,16 @@ const JobSearchPage = () => {
         setSortLoc(sortLoc === 'Lac2' ? 'Marsa' : 'Lac2');
         handleFilterLocation(job.location);
         handleLocationsPress(job);
-      };
-    
-      const handleLocationsPress = (job) => {
+    };
+
+    const handleLocationsPress = (job) => {
         setSelectedLocation(job);
         setLocationsVisible(false);
-      };
-    
-      const toggleLocationsVisible = () => {
+    };
+
+    const toggleLocationsVisible = () => {
         setLocationsVisible(!locationsVisible);
-      };
+    };
 
     const handleFilterLocation = (location) => {
         if (location == '') {
@@ -83,7 +83,7 @@ const JobSearchPage = () => {
         const order = sortOrder === 'asc' ? 'desc' : 'asc';
         setSortOrder(order);
         setFilteredJobs(prevJobs =>
-            prevJobs.slice().sort((a, b) => (order === 'asc' ? a.price - b.price : b.price - a.price))
+            prevJobs.slice().sort((a, b) => (order === 'desc' ? a.price - b.price : b.price - a.price))
         );
     };
 
@@ -99,53 +99,58 @@ const JobSearchPage = () => {
 
 
     return (
+
+
         <View style={styles.container}>
+
             <View style={styles.searchBarContainer}>
                 <TextInput
                     placeholder="Search for jobs"
                     value={searchQuery}
                     onChangeText={handleSearch}
                 />
+
+                <TouchableOpacity style={styles.button}><Image resizeMode='contain' source={require('./assets/hc.png')} style={styles.img} /></TouchableOpacity>
             </View>
             <View style={styles.a}>
                 <View>
-                <TouchableOpacity onPress={toggleOptionsVisible} style={styles.b}>
-                    <Text style={styles.c}>{selectedOption ? selectedOption.label : 'Price'}</Text>
-                    <Feather name={optionsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
-                </TouchableOpacity>
-                {optionsVisible && (
-                    <ScrollView style={styles.d}>
-                        {options.map((option) => (
-                            <TouchableOpacity
-                                key={option.value}
-                                onPress={() => handleBothOptions(option)}
-                                style={styles.e}
-                            >
-                                <Text style={styles.f}>{option.label}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                )}
+                    <TouchableOpacity onPress={toggleOptionsVisible} style={styles.b}>
+                        <Text style={styles.c}>{selectedOption ? selectedOption.label : 'Price'}</Text>
+                        <Feather name={optionsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
+                    </TouchableOpacity>
+                    {optionsVisible && (
+                        <ScrollView style={styles.d}>
+                            {options.map((option) => (
+                                <TouchableOpacity
+                                    key={option.value}
+                                    onPress={() => handleBothOptions(option)}
+                                    style={styles.e}
+                                >
+                                    <Text style={styles.f}>{option.label}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    )}
                 </View>
                 <View>
-                <TouchableOpacity onPress={toggleLocationsVisible} style={styles.cc}>
-                    <Text style={styles.c}>{selectedLocation ? selectedLocation.location : 'Location'}</Text>
-                    <Feather name={locationsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
-                </TouchableOpacity>
-                
-                {optionsVisible && (
-                    <ScrollView style={styles.d}>
-                        {options.map((job) => (
-                            <TouchableOpacity
-                                key={job.id}
-                                onPress={() => handleBothLocations(job)}
-                                style={styles.e}
-                            >
-                                <Text style={styles.f}>{job.location}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                )}
+                    <TouchableOpacity onPress={toggleLocationsVisible} style={styles.cc}>
+                        <Text style={styles.c}>{selectedLocation ? selectedLocation.location : 'Location'}</Text>
+                        <Feather name={locationsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
+                    </TouchableOpacity>
+
+                    {optionsVisible && (
+                        <ScrollView style={styles.d}>
+                            {options.map((job) => (
+                                <TouchableOpacity
+                                    key={job.id}
+                                    onPress={() => handleBothLocations(job)}
+                                    style={styles.e}
+                                >
+                                    <Text style={styles.f}>{job.location}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    )}
                 </View>
 
 
@@ -157,6 +162,7 @@ const JobSearchPage = () => {
                 contentContainerStyle={styles.list}
             />
         </View>
+
     );
 };
 
@@ -184,7 +190,7 @@ const styles = StyleSheet.create({
     card: {
         height: 120,
         marginBottom: 20,
-        borderRadius: 10,
+        borderRadius: 70,
         flexDirection: 'row',
         backgroundColor: '#FFF',
         shadowColor: '#000',
@@ -199,8 +205,7 @@ const styles = StyleSheet.create({
     image: {
         width: 120,
         height: '100%',
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
+        borderRadius: 70,
     },
     jobInfo: {
         flex: 1,
@@ -224,8 +229,8 @@ const styles = StyleSheet.create({
 
     },
     a: {
-        
-        flexDirection:'row',
+
+        flexDirection: 'row',
 
         alignItems: "center",
         shadowOffset: {
@@ -242,11 +247,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 30,
-        marginLeft:20,
+        marginLeft: 20,
         padding: 20,
         width: 150,
-        borderTopLeftRadius:10,
-        borderTopRightRadius:10
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
     c: {
         color: '#fff',
@@ -254,26 +259,26 @@ const styles = StyleSheet.create({
         width: 80,
         height: 20,
     },
-    cc:{
+    cc: {
         flexDirection: 'row',
         marginTop: 30,
-        
+
         padding: 20,
         width: 150,
         alignItems: 'center',
         backgroundColor: '#18C0C1',
         justifyContent: 'space-between',
-        marginLeft:20,
-        borderTopLeftRadius:10,
-        borderTopRightRadius:10
+        marginLeft: 20,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
     d: {
         backgroundColor: '#18C0C1',
-        width:150,
-        marginLeft:20,
-        borderBottomLeftRadius:10,
-        borderBottomRightRadius:10
-        
+        width: 150,
+        marginLeft: 20,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
+
 
     },
     e: {
@@ -285,6 +290,31 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
 
+    },
+    cont: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        overflow: 'hidden',
+    },
+    img: {
+        width: 40,
+        height: 40,
+        marginLeft: 20,
+        marginBottom:400,
+        borderRadius:50,
+    },
+    button: {
+        position: 'absolute',
+        top: -18,
+        left: 280,
+        borderRadius: 30,
+        padding: 10,
+        display:"flex",
+        justifyContent:"space-between",
+        
     },
 });
 
