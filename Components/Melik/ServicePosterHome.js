@@ -1,19 +1,32 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import {React, useState} from 'react';
 import Card from './Card';
+import ConfirmCard from './ConfirmCard'
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export default function ServicePosterHome({navigation}) {
   const [myServices,setMyServices] =useState( [
-    { id:1,Title: 'Jardinage', Statut: 'En Attente', Date: '14/02/2023' },
-    { id:2,Title: 'Promener Le Chien', Statut: 'Recruté', Date: '14/02/2023' }
+    { id:0 ,Title: 'Jardinage', Statut: 'En Attente', Date: '14/02/2023' },
+    { id:1 ,Title: 'Promener Le Chien', Statut: 'Recruté', Date: '14/02/2023' }
   ]);
 
-  const onConfirm=(id)=>{
-    
-    setMyServices
-  }
+  const updateServiceStatus = (id, newStatus) => {
+    setMyServices((prevServices) => {
+      const updatedServices = prevServices.map((service) => {
+        if (service.id === id) {
+          return { ...service, Statut: newStatus };
+        } else {
+          return service;
+        }
+      });
+      return updatedServices;
+    });
+  };
+
+  const onConfirm = (id) => {
+    updateServiceStatus(id, 'Recruté');
+  };
 
 
 
@@ -31,8 +44,10 @@ export default function ServicePosterHome({navigation}) {
       {myServices.map((service, index) => (
         <Card key={index} Title={service.Title} Statut={service.Statut} Date={service.Date} onPress={() => {
             if (service.Statut === 'En Attente') {
-              navigation.navigate('Confirmation', { Title:service.Title, Statut: service.Statut, Date: service.Date, uri:'https://cdn2.f-cdn.com/files/download/38545966/4bce6b.jpg'});}}} />
+              navigation.navigate('Confirmation', { Title:service.Title, Statut: service.Statut, Date: service.Date, uri:'https://cdn2.f-cdn.com/files/download/38545966/4bce6b.jpg', onConfirm:onConfirm});}}} />
       ))}
+
+      
       
       <TouchableOpacity style={Melik.addButton}>
         <Text style={Melik.addButtonText}>+</Text>

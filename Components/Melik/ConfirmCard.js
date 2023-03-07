@@ -2,7 +2,7 @@ import {React, useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 
-export default function Card(props) {
+export default function ConfirmCard(props) {
 
 
 
@@ -12,7 +12,7 @@ export default function Card(props) {
 
   const handleConfirm = (id) => {
   props.onReject(id);
-  props.onConfirm();
+  props.onConfirm(id);
   }
  
   return (
@@ -46,7 +46,7 @@ export default function Card(props) {
             <Text style={styles.location}>{props.Location}</Text>
             </View>
             <View style={styles.buttons}>
-            <TouchableOpacity onPress={()=> handleConfirm}>
+            <TouchableOpacity onPress={()=> handleConfirm(props.id)}>
                     <Image source={require('./checked.png')} style={styles.confirm} />
             </TouchableOpacity>
 

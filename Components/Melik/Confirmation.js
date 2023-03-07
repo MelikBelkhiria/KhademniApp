@@ -11,10 +11,10 @@ import ConfirmCard from './ConfirmCard'
 
 
 export default function Confirmation({ route }) {
-  const { Title, Statut, Date, uri } = route.params;
+  const { Title, Statut, Date, uri, onConfirm } = route.params;
 
-  const [candidates, setCondidates]= useState([{id:1,fullName: 'Maria Ben Moulehem', Location: 'Tunis', Date:'14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1'},
-  {id:2, fullName: 'Salima Ben Yedder', Location: 'Sousse', Date:'10/02/2023', uri:'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1'}]) 
+  const [candidates, setCondidates]= useState([{id:0,fullName: 'Maria Ben Moulehem', Location: 'Tunis', Date:'14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1'},
+  {id:1, fullName: 'Salima Ben Yedder', Location: 'Sousse', Date:'10/02/2023', uri:'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1'}]) 
 
   
 
@@ -31,7 +31,6 @@ export default function Confirmation({ route }) {
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{Title}</Text>
-          <Text style={[styles.statut, styles.statutText]}>{Statut}</Text>
         </View>
         {uri && <Image style={styles.image} source={{ uri }} />}
       </View>
@@ -54,7 +53,7 @@ export default function Confirmation({ route }) {
 
 
     {candidates.map((service, index) => (
-        <ConfirmCard key={index} name={service.fullName} Location={service.Location} Date={service.Date} uri={service.uri} id={service.id} onReject={onReject}/>
+        <ConfirmCard key={index} name={service.fullName} Location={service.Location} Date={service.Date} uri={service.uri} id={service.id} onReject={onReject} onConfirm={onConfirm}/>
       ))}
       
       
