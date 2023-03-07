@@ -1,14 +1,21 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import {React, useState} from 'react';
 import Card from './Card';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export default function ServicePosterHome({navigation}) {
-  const myServices = [
-    { Title: 'Jardinage', Statut: 'En Attente', Date: '14/02/2023' },
-    { Title: 'Promener Le Chien', Statut: 'Recruté', Date: '14/02/2023' }
-  ];
+  const [myServices,setMyServices] =useState( [
+    { id:1,Title: 'Jardinage', Statut: 'En Attente', Date: '14/02/2023' },
+    { id:2,Title: 'Promener Le Chien', Statut: 'Recruté', Date: '14/02/2023' }
+  ]);
+
+  const onConfirm=(id)=>{
+    
+    setMyServices
+  }
+
+
 
   return (
     <View style={Melik.container}>

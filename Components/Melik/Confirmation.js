@@ -2,22 +2,29 @@ import {React, useState} from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownLocation from './DropDownLocation'
+import DropDownTime from './DropDownTime';
+import DropDownRating from './DropDownRating copy';
+import ConfirmCard from './ConfirmCard'
+
 
 
 
 export default function Confirmation({ route }) {
   const { Title, Statut, Date, uri } = route.params;
 
-  const options = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    { label: 'Option 3', value: 'option3' },
-  ];
+  const [candidates, setCondidates]= useState([{id:1,fullName: 'Maria Ben Moulehem', Location: 'Tunis', Date:'14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1'},
+  {id:2, fullName: 'Salima Ben Yedder', Location: 'Sousse', Date:'10/02/2023', uri:'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1'}]) 
+
+  
+
+  const onReject = (id) => {
+     setCondidates(candidates.filter((item) => item.id !== id ))
+  }
 
 
-  const [selectedOption1, setSelectedOption1] = useState(null);
-  const [selectedOption2, setSelectedOption2] = useState(null);
-  const [selectedOption3, setSelectedOption3] = useState(null);
+ 
+
 
   return (
     <View style={styles.container}>
@@ -28,6 +35,27 @@ export default function Confirmation({ route }) {
         </View>
         {uri && <Image style={styles.image} source={{ uri }} />}
       </View>
+
+    <View style={styles.filterContainer}>
+
+      <View  style={{marginLeft: 30}}>
+      <DropDownLocation/>
+      </View>
+
+      <View  style={{marginLeft: 30}}>
+      <DropDownTime/>
+      </View>
+
+      <View style={{marginLeft: 30, marginRight: 30}}>
+      <DropDownRating/>
+      </View>
+
+    </View>
+
+
+    {candidates.map((service, index) => (
+        <ConfirmCard key={index} name={service.fullName} Location={service.Location} Date={service.Date} uri={service.uri} id={service.id} onReject={onReject}/>
+      ))}
       
       
       <View style={styles.content}>
@@ -57,6 +85,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft:30
   },
+
+  filterContainer:{
+    flexDirection:'row',
+  },
+
   statut: {
     fontSize: 11,
     marginLeft: 30,
