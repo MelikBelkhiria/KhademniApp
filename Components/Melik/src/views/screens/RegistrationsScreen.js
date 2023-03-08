@@ -1,11 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {React, useState} from 'react'
+import {React, useState,createContext} from 'react'
 import {SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView} from 'react-native'
 import Picker from '@react-native-picker/picker'
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import COLORS from "../../conts/colors";
 import Button from "../components/Button";
 import Input from "../components/Input";
+export const OptionsContext = createContext();
+
+
 
 const RegistrationScreen = ({navigation}) => {
 
@@ -30,6 +33,12 @@ const RegistrationScreen = ({navigation}) => {
       if(!validateEmail()) {
         alert('Please enter a valid email address');
         return;
+      }
+      if (selectedOption==="Employeur"){
+        navigation.navigate("ServicePoster")
+      }
+      if (selectedOption==="Travailleur"){
+        navigation.navigate("Search")
       }
       // Handle account creation logic here
     }
@@ -74,7 +83,7 @@ const RegistrationScreen = ({navigation}) => {
             <Button title="Créer" onPress={handleCreateAccount}/>
 
             <Text
-                onPress={()=>navigation.navigate('LoginScreen')}
+                onPress={()=>navigation.navigate('login')}
                 style={{
                 color: COLORS.black,
                 textAlign:'center',

@@ -8,7 +8,8 @@ import { openBrowserAsync } from 'expo-web-browser';
 
 
 
-export default function Profileofseekerforseeker({navigation}) {
+
+export default function Profileposterforposter(navigation) {
     const [follow, setfollow] = useState(false);
     const menuItemsToDisplay = [
         { name: 'service cuisson ', id: '1A', number: '4' },
@@ -30,18 +31,14 @@ export default function Profileofseekerforseeker({navigation}) {
 
     const renderItem = ({ item }) => <Item name={item.name} number={item.number} />;
 
-const handleall =() =>{
-    setfollow(!follow)
-    navigation.navigate("ServiceSeeker3")
 
-}
 
     return (
         <View style={styles.container}>
-    <TouchableOpacity onPress={()=>navigation.navigate("Search") }><Ionicons style={styles.goback} name="arrow-back-outline" size={30}></Ionicons></TouchableOpacity>
+    <Ionicons style={styles.goback}  name="arrow-back-outline" size={30}></Ionicons>
             <View style={styles.headercontainer}>
                 <View style={styles.containerprofile}>
-                    <Image style={styles.imageprofile} resizeMode="contain" source={require("./257343671_446285320177426_6925597833109609576_n-e1640194834882.jpg")} />
+                    <Image style={styles.imageprofile} resizeMode="contain" source={require("./IMG_1368-Modifica_pp-1.jpg")} />
                     <View>
                         <Text style={styles.nomprofile}>Melik Belkhiria </Text>
                         <View style={styles.reviewcontainer}>
@@ -49,10 +46,9 @@ const handleall =() =>{
                             <Ionicons style={styles.star} size={17} name="star"></Ionicons>
                             <Text style={styles.numberating}> 4</Text>
                         </View>
-                        <TouchableOpacity style={styles.follow} onPress={() => navigation.navigate("ServiceSeeker3")}>
+                        <TouchableOpacity style={styles.follow} onPress={() => { setfollow(!follow) }}>
                             <View style={styles.containerfollow}>
                                 <Ionicons style={styles.iconfollow} size={25} name="create-outline"></Ionicons>
-
                                 <Text style={styles.followtext}> Edit Profile </Text>
                             </View>
                         </TouchableOpacity>
@@ -68,15 +64,13 @@ const handleall =() =>{
                     Description
                 </Text>
                 <Text style={styles.description}>
-                Bonjour, je m'appelle Pierre et je suis intéressé par le poste que vous proposez. Je suis un travailleur respectueux et j'apprécie 
-                la collaboration en équipe. j'ai été reconnu pour mon travail acharné J'ai toujours été ponctuel et j'ai respecté les délais . 
+                Molka Ghariani , j'ai 2 restaurants a tunis e genralements j'ai besoin d'un aide a servir quelque weekends generalement et  J'aimerais que mes employés soient ponctuels, respectueux et fiables.
+
                 </Text>
                 <Text style={styles.titles}>
                     CV
                 </Text>
-                <TouchableOpacity onPress={() => openBrowserAsync("https://www.africau.edu/images/default/sample.pdf")} style={styles.downloadcv}>
-                    <Text>Download CV</Text>
-                </TouchableOpacity>
+
                 <Text style={styles.titles}>
                     Offres d'emploi qui ont été publiées:
                 </Text>
@@ -113,12 +107,12 @@ const styles = StyleSheet.create({
 
     },
     bodycontainer: {
-        flex: 0.66,
+        flex: 0.5,
         marginTop: 60,
         marginLeft: 20
     },
     listratingcontainer: {
-        flex: 1
+        flex: 1.2
     },
     containerflatlist: {
         flexDirection: 'row'

@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image,Pressable} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DropDownLocation from './DropDownLocation'
@@ -10,7 +10,7 @@ import ConfirmCard from './ConfirmCard'
 
 
 
-export default function Confirmation({ route }) {
+export default function Confirmation({ route,navigation }) {
   const { Title, Statut, Date, uri, onConfirm } = route.params;
 
   const [candidates, setCondidates]= useState([{id:0,fullName: 'Maria Ben Moulehem', Location: 'Tunis', Date:'14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1'},
@@ -51,11 +51,11 @@ export default function Confirmation({ route }) {
 
     </View>
 
-
+ 
     {candidates.map((service, index) => (
         <ConfirmCard key={index} name={service.fullName} Location={service.Location} Date={service.Date} uri={service.uri} id={service.id} onReject={onReject} onConfirm={onConfirm}/>
       ))}
-      
+
       
       <View style={styles.content}>
         {/* Your confirmation content */}

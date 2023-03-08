@@ -14,7 +14,7 @@ from "react-native";
 
 
 
-export default function ServicePoster5() {
+export default function ServicePoster5({navigation}) {
   const [title, settitle] = useState("");
   const [location, setlocation] = useState("");
   const [Price, setprice] = useState("");
@@ -71,7 +71,7 @@ export default function ServicePoster5() {
         /> 
       </View> 
       <View>
-      <TouchableOpacity style={styles.PostBtn}>
+      <TouchableOpacity style={styles.PostBtn} onPress={()=>navigation.navigate("ServicePosterHome")}>
         <Text style={styles.loginText}>POST</Text> 
       </TouchableOpacity> 
     </View> 

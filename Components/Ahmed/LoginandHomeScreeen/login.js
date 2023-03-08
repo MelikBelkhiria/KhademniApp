@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { Linking } from 'react-native';
 
-export default function Login() {
+
+
+export default function Login({navigation}) {
 
     const [email, onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('');
@@ -50,19 +53,21 @@ export default function Login() {
                         <Text style={styles.forgotpassword}> Mot de passe oublier  </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.login} onPress={() => { }}>
+                    <TouchableOpacity style={styles.login} onPress={() => {navigation.navigate("Search") }}>
                         <Text style={styles.logintext}>Se connecter</Text>
                     </TouchableOpacity>
 
                     <View style={styles.addtext}>
-                        <Text style={styles.text}> or se connecter avec...</Text>
+                        <Text style={styles.text}> ou bien se connecter avec...</Text>
                     </View>
 
                     <View style={styles.loginwith}>
-                        <TouchableOpacity style={styles.loginwithfacebook} onPress={() => { }}>
+                        <TouchableOpacity style={styles.loginwithfacebook} onPress={() => {  Linking.openURL('https://www.google.com');
+ }}>
                             <Image source={require('./icons8-logo-google-48.png')} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.loginwith} onPress={() => { }}>
+                        <TouchableOpacity style={styles.loginwith} onPress={() => {  Linking.openURL('https://www.facebook.com');
+ }}>
                             <Image source={require('./icons8-facebook-48.png')} />
                         </TouchableOpacity>
                     </View>

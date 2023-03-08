@@ -13,7 +13,7 @@ from "react-native";
 
 
 
-export default function ServiceSeeker3() {
+export default function ServiceSeeker3({navigation}) {
   const [Name, setname] = useState("");
   const [Description, setDescription] = useState("");
  
@@ -52,7 +52,7 @@ export default function ServiceSeeker3() {
         /> 
       </View> 
       <View>
-      <TouchableOpacity style={styles.SaveBtn}>
+      <TouchableOpacity style={styles.SaveBtn} onPress={()=> navigation.navigate("profileofseekerforseeker")}>
         <Text style={styles.loginText}>Save</Text> 
       </TouchableOpacity> 
 

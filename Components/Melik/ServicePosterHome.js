@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from 'react-native';
 import {React, useState} from 'react';
 import Card from './Card';
 import ConfirmCard from './ConfirmCard'
@@ -28,18 +28,17 @@ export default function ServicePosterHome({navigation}) {
     updateServiceStatus(id, 'Recruté');
   };
 
-
-
   return (
     <View style={Melik.container}>
       <View style={Melik.row}>
         <Text style={Melik.text}>Bienvenue Samira Jannet!</Text>
-        <Image
+        <Pressable onPress={()=>navigation.navigate("profileposterforposter")}>
+        <Image 
           source={{
             uri: 'https://cdn2.f-cdn.com/files/download/38545966/4bce6b.jpg'
           }}
           style={Melik.image}
-        />
+        /></Pressable>
       </View>
       {myServices.map((service, index) => (
         <Card key={index} Title={service.Title} Statut={service.Statut} Date={service.Date} onPress={() => {
@@ -48,8 +47,7 @@ export default function ServicePosterHome({navigation}) {
       ))}
 
       
-      
-      <TouchableOpacity style={Melik.addButton}>
+      <TouchableOpacity style={Melik.addButton} onPress={()=>navigation.navigate("ServicePoster5")}>
         <Text style={Melik.addButtonText}>+</Text>
       </TouchableOpacity>
     </View>

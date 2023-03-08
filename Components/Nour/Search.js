@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Profileofseekerforseeker from '../Ahmed/profileofseekerforseeker';
 
 const jobs = [
     { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('../../assets/cuisinier.jpg') },
@@ -9,10 +10,10 @@ const jobs = [
     { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('../../assets/RIP.jpg') },
 ];
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job,navigation }) => {
     return (
-        <TouchableOpacity style={styles.card}>
-            <Image source={job.image} style={styles.image} />
+        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("Application")}>
+            <Image source={job.image} style={styles.image}  />
             <View style={styles.jobInfo}>
                 <Text style={styles.name}>{job.name}</Text>
                 <Text style={styles.price}>{job.price}€</Text>
@@ -24,7 +25,7 @@ const JobCard = ({ job }) => {
     );
 };
 
-const Search = () => {
+const Search = ({navigation}) => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortLoc, setSortLoc] = useState('Lac2');
@@ -42,7 +43,7 @@ const Search = () => {
     const handleBothOptions = (option) => {
         setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
         handleFilterPrice();
-        handleOptionPress(option);
+        handleOptionPress(option)
     };
 
     const handleOptionPress = (option) => {
@@ -110,7 +111,7 @@ const Search = () => {
                     onChangeText={handleSearch}
                 />
 
-                <TouchableOpacity style={styles.button}><Image resizeMode='contain' source={require('../../assets/hc.jpg')} style={styles.img} /></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("profileofseekerforseeker")}  ><Image resizeMode='contain' source={require('../../assets/hc.jpg')} style={styles.img}  /></TouchableOpacity>
             </View>
             <View style={styles.a}>
                 <View>
@@ -125,6 +126,7 @@ const Search = () => {
                                     key={option.value}
                                     onPress={() => handleBothOptions(option)}
                                     style={styles.e}
+                                    
                                 >
                                     <Text style={styles.f}>{option.label}</Text>
                                 </TouchableOpacity>
@@ -144,12 +146,14 @@ const Search = () => {
 
 
             </View>
+            
             <FlatList
                 data={filteredJobs}
                 keyExtractor={job => job.id}
-                renderItem={({ item }) => <JobCard job={item} />}
+                renderItem={({ item }) =>(<JobCard navigation={navigation} job={item}/>)}
                 contentContainerStyle={styles.list}
             />
+          
         </View>
 
     );

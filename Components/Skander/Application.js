@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 import Rating from "../../Utlity/Stars"
-const Application = () => {
+const Application = ({navigation}) => {
   const [showMore, setShowMore] = useState(false);
 
 
@@ -68,7 +68,7 @@ const Application = () => {
         )}
       </View>
       <View style={{flex:0.2,justifyContent:"center",alignItems:"center"}}>
-      <Pressable>
+      <Pressable onPress={()=>navigation.navigate("Search")}>
         <Text style={{backgroundColor:"#18C0C1",width:170,height:"60%",textAlign:"center",textAlignVertical:"center",fontWeight:"bold",color:"white",borderRadius:10,marginTop:20}}>Poser candidature</Text>
       </Pressable>
       </View>
