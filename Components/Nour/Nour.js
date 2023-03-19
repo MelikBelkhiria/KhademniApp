@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, S
 import { Feather } from '@expo/vector-icons';
 
 const jobs = [
-    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('./assets/cuisinier.png') },
+    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Bizert', image: require('./assets/cuisinier.png') },
     { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('./assets/jardinier.png') },
     { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('./assets/fmm.png') },
     { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('./assets/RIP.png') },
@@ -40,6 +40,7 @@ const JobSearchPage = () => {
     const locations = [
         { label: 'Lac2', value: 'L2' },
         { label: 'Marsa', value: 'M' },
+        { label: 'Bizert', value: 'B' },
     ];
 
 
