@@ -28,7 +28,7 @@ const JobSearchPage = () => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortLoc, setSortLoc] = useState('Lac2');
-    const [selectedLocation, setSelectedLocation] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedOption, setSelectedOption] = useState(false);
     const [optionsVisible, setOptionsVisible] = useState(false);
@@ -38,6 +38,11 @@ const JobSearchPage = () => {
         { label: 'Ascending', value: 'asc' },
         { label: 'Descending', value: 'desc' },
     ];
+    const locations = [
+        { label: 'Lac2', value: 'L2' },
+        { label: 'Marsa', value: 'M' },
+    ];
+
 
     const handleBothOptions = (option) => {
         setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -53,14 +58,14 @@ const JobSearchPage = () => {
     const toggleOptionsVisible = () => {
         setOptionsVisible(!optionsVisible);
     };
-    const handleBothLocations = (job) => {
+    const handleBothLocations = (location) => {
         setSortLoc(sortLoc === 'Lac2' ? 'Marsa' : 'Lac2');
-        handleFilterLocation(job.location);
-        handleLocationsPress(job);
+        handleFilterLocation(location.label);
+        handleLocationsPress(location);
     };
 
-    const handleLocationsPress = (job) => {
-        setSelectedLocation(job);
+    const handleLocationsPress = (location) => {
+        setSelectedLocation(location);
         setLocationsVisible(false);
     };
 
@@ -134,19 +139,19 @@ const JobSearchPage = () => {
                 </View>
                 <View>
                     <TouchableOpacity onPress={toggleLocationsVisible} style={styles.cc}>
-                        <Text style={styles.c}>{selectedLocation ? selectedLocation.location : 'Location'}</Text>
+                        <Text style={styles.c}>{selectedLocation ? selectedLocation.label : 'Location'}</Text>
                         <Feather name={locationsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
                     </TouchableOpacity>
 
                     {optionsVisible && (
                         <ScrollView style={styles.d}>
-                            {options.map((job) => (
+                            {locations.map((location) => (
                                 <TouchableOpacity
-                                    key={job.id}
-                                    onPress={() => handleBothLocations(job)}
+                                    key={location.value}
+                                    onPress={() => handleBothLocations(location)}
                                     style={styles.e}
                                 >
-                                    <Text style={styles.f}>{job.location}</Text>
+                                    <Text style={styles.f}>{location.label}</Text>
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
@@ -303,8 +308,8 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         marginLeft: 20,
-        marginBottom:400,
-        borderRadius:50,
+        marginBottom: 400,
+        borderRadius: 50,
     },
     button: {
         position: 'absolute',
@@ -312,9 +317,9 @@ const styles = StyleSheet.create({
         left: 280,
         borderRadius: 30,
         padding: 10,
-        display:"flex",
-        justifyContent:"space-between",
-        
+        display: "flex",
+        justifyContent: "space-between",
+
     },
 });
 
