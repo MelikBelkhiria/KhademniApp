@@ -27,7 +27,6 @@ const JobCard = ({ job }) => {
 const JobSearchPage = () => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
-    const [sortLoc, setSortLoc] = useState('Lac2');
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedOption, setSelectedOption] = useState(false);
@@ -59,7 +58,6 @@ const JobSearchPage = () => {
         setOptionsVisible(!optionsVisible);
     };
     const handleBothLocations = (location) => {
-        setSortLoc(sortLoc === 'Lac2' ? 'Marsa' : 'Lac2');
         handleFilterLocation(location.label);
         handleLocationsPress(location);
     };
