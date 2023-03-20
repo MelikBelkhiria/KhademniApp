@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'reac
 import Rating from "../../Utlity/Stars"
 const Application = ({navigation}) => {
   const [showMore, setShowMore] = useState(false);
-
+/**daz */
 
   return (
     <View style={{ flex: 1 }}>
