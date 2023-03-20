@@ -4,7 +4,7 @@ import Rating from "../../Utlity/Stars"
 const Application = ({navigation}) => {
   const [showMore, setShowMore] = useState(false);
 
-
+/*da*/
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.25, justifyContent: "space-around", flexDirection: "row", backgroundColor: "white", alignItems: "center", marginTop: 20 }}>
