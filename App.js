@@ -21,7 +21,7 @@ import Chat from "./Components/Skander/Chat";
 import Notifications from "./Components/Skander/Notifications";
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
-
+/**please work */
 const HomeScreen = () => {
   return (
     <View>
