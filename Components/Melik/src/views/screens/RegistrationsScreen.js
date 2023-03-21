@@ -10,7 +10,7 @@ export const OptionsContext = createContext();
 
 
 
-const RegistrationScreen = ({navigation}) => {
+const RegistrationScreen = ({navigation,route}) => {
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [email, setEmail] = useState('');
@@ -18,6 +18,7 @@ const RegistrationScreen = ({navigation}) => {
 
     const handleOptionSelect = (option) => {
       setSelectedOption(option);
+      route.params.onUserTypeSelect(option)
     };
 
     const handleEmailChange = (value) => {
@@ -34,12 +35,8 @@ const RegistrationScreen = ({navigation}) => {
         alert('Please enter a valid email address');
         return;
       }
-      if (selectedOption==="Employeur"){
-        navigation.navigate("ServicePoster")
-      }
-      if (selectedOption==="Travailleur"){
-        navigation.navigate("Search")
-      }
+ 
+      navigation.navigate("HomeScreen")
       // Handle account creation logic here
     }
 
@@ -83,7 +80,7 @@ const RegistrationScreen = ({navigation}) => {
             <Button title="Créer" onPress={handleCreateAccount}/>
 
             <Text
-                onPress={()=>navigation.navigate('login')}
+
                 style={{
                 color: COLORS.black,
                 textAlign:'center',
@@ -91,7 +88,7 @@ const RegistrationScreen = ({navigation}) => {
                 fontWeight: 'bold',
                 marginVertical:20
             }}>
-            Vous avez déjà un compte? Se connecter
+            Vous avez déjà un compte? <Text onPress={()=>navigation.navigate('login')} style={{color:"#18C0C1"}}>Se connecter</Text> 
             </Text>
           </View>
         </ScrollView>

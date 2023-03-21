@@ -1,3 +1,4 @@
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -6,7 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-export default function Home({navigation}) {
+
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -15,31 +17,40 @@ export default function Home({navigation}) {
           uri: "https://www.transparenttextures.com/patterns/back-pattern.png",
         }}
       >
-        <View style={styles.titre}>
-          <Text style={styles.texttitre}> Khademni</Text>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Khademni</Text>
         </View>
-        <View style={styles.imagecontainer}>
+
+        <View style={styles.content}>
           <Image
             style={styles.image}
-            source={require("../LoginandHomeScreeen/digital-marketing.png")}
+            source={require("./digital-marketing.png")}
           />
+<Text style={styles.jobTitle}>Trouvez des services</Text>
+<Text style={styles.subTitle}>
+  Découvrez notre plateforme pour trouver des services ou des employeurs près de chez vous rapidement. Simplifiez votre vie avec notre application !
+</Text>
+
+
+
+          <TouchableOpacity
+            style={styles.signupButton}
+            onPress={() => navigation.navigate("login")}
+          >
+            <Text style={styles.signupText}>Se connecter</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.signupButton}
+            onPress={() => navigation.navigate("RegistrationScreen")}
+          >
+            <Text style={styles.signupText}>Créer un compte</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.jobopp}>Opportunite des services</Text>
-        <Text style={styles.fact}>
-          {" "}
-          Besoins d'argent supplémentaires ? Notre Alicqtion facilite la
-          recherche d'un emploi temporaire.
-        </Text>
-        <TouchableOpacity style={styles.login} onPress={() => {navigation.navigate("login")}}>
-          <Text style={styles.logintext}>Se connecter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.signup} onPress={() => {navigation.navigate("RegistrationScreen")}}>
-          <Text style={styles.signuptext}>creer un compte</Text>
-        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -51,62 +62,66 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#18C0C1",
   },
-  texttitre: {
-    fontSize: 16,
-    color: "#fff",
+  header: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginLeft: 20,
+    marginTop: 20
   },
-  titre: {
-    flex: 0.55,
-    marginRight: 280,
-  },
-  jobopp: {
-    fontSize: 24,
+  headerText: {
+    fontSize: 40,
     fontWeight: "bold",
-    marginRight: 128,
     color: "#fff",
-  },
-  fact: {
-    fontSize: 15,
-    color: "#fff",
-    marginLeft: 17,
-    margin: 10,
+    textShadowColor: "#000",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+    letterSpacing: 2,
+  }
+  ,
+  content: {
+    flex: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom:30
   },
   image: {
-    width: 320,
-    height: 250,
+    height: 350,
+    width: 350
+
+
   },
-  imagecontainer: {
-    alignItems: "center",
-    marginTop: 6,
-    marginBottom: 44,
-  },
-  login: {
-    backgroundColor: "#fff",
-    width: 150,
-    alignItems: "center",
-    borderRadius: 10,
-    padding: 10,
-    marginTop: 70,
-  },
-  logintext: {
-    alignItems: "center",
-    textAlign: "center",
-    fontSize: 18,
-    color: "#18C0C1",
-  },
-  signuptext: {
-    alignItems: "center",
-    textAlign: "center",
-    fontSize: 18,
-    color: "#fff",
-    borderColor: "#18C0C1",
-  },
-  signup: {
-    backgroundColor: "#073e3e",
-    width: 150,
-    alignItems: "center",
-    borderRadius: 10,
-    padding: 10,
+  jobTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
     marginTop: 20,
+    color: "#fff",
+    textAlign: "center",
   },
+  subTitle: {
+    fontSize: 16,
+    color: "#fff",
+    textAlign: "center",
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 30,
+  },
+
+  signupButton: {
+    backgroundColor: "#fff",
+    width: 180,
+    borderRadius: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "#18C0C1",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10
+  },
+  signupText: {
+    color: "#18C0C1",
+    fontSize: 18,
+    fontWeight: "bold",
+  }
 });
+export default HomeScreen

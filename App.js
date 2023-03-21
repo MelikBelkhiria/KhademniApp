@@ -32,7 +32,11 @@ const HomeScreen = () => {
 
 const Tab = createBottomTabNavigator();
 export default function App() {
+  const [userType, setUserType] = useState("");
 
+  const onUserTypeSelect = (selectedOption) => {
+    setUserType(selectedOption);
+  };
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -60,7 +64,7 @@ export default function App() {
         />
         <Tab.Screen
           name="HomeScreen"
-          component={Search} /*Search*/
+          component={userType === "Employeur" ? ServicePosterHome : Search }
           options={{
             tabBarIcon: ({ color }) => (
               <Ionicons
@@ -98,7 +102,8 @@ export default function App() {
             tabBarButton: () => null,
             tabBarVisible: false,
           }} />
-        <Tab.Screen name="RegistrationScreen" component={RegistrationScreen}           options={{
+        <Tab.Screen name="RegistrationScreen" component={RegistrationScreen} initialParams={{ onUserTypeSelect: onUserTypeSelect }}   options={{
+
             headerShown:false,
             tabBarButton: () => null,
             tabBarVisible: false,
