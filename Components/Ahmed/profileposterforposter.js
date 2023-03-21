@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, FlatList } 
 import React, { useState } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { openBrowserAsync } from 'expo-web-browser';
+import { ImageBackground } from 'react-native';
 
 
 
@@ -9,7 +10,7 @@ import { openBrowserAsync } from 'expo-web-browser';
 
 
 
-export default function Profileposterforposter(navigation) {
+export default function Profileposterforposter({navigation}) {
     const [follow, setfollow] = useState(false);
     const menuItemsToDisplay = [
         { name: 'service cuisson ', id: '1A', number: '4' },
@@ -25,7 +26,7 @@ export default function Profileposterforposter(navigation) {
     const Item = ({ name, number }) => (
         <View style={styles.containerflatlist} >
             <Text style={styles.textrating}>{name}</Text>
-            <Ionicons style={styles.star} size={17} name="star-outline"> </Ionicons>
+            <Ionicons style={styles.star} size={17} name="star"> </Ionicons>
             <Text style={styles.numberating} >{number}</Text>
         </View>);
 
@@ -34,8 +35,8 @@ export default function Profileposterforposter(navigation) {
 
 
     return (
-        <View style={styles.container}>
-    <Ionicons style={styles.goback}  name="arrow-back-outline" size={30}></Ionicons>
+        <ImageBackground source={require("../../assets/image5.png")} style={styles.container}>
+    <Ionicons style={styles.goback}  name="arrow-back-outline" size={30} onPress={()=>navigation.navigate("HomeScreen")}></Ionicons>
             <View style={styles.headercontainer}>
                 <View style={styles.containerprofile}>
                     <Image style={styles.imageprofile} resizeMode="contain" source={require("./IMG_1368-Modifica_pp-1.jpg")} />
@@ -46,7 +47,7 @@ export default function Profileposterforposter(navigation) {
                             <Ionicons style={styles.star} size={17} name="star"></Ionicons>
                             <Text style={styles.numberating}> 4</Text>
                         </View>
-                        <TouchableOpacity style={styles.follow} onPress={() => { setfollow(!follow) }}>
+                        <TouchableOpacity style={styles.follow} onPress={() => { setfollow(!follow);navigation.navigate("ServicePoster3") }}>
                             <View style={styles.containerfollow}>
                                 <Ionicons style={styles.iconfollow} size={25} name="create-outline"></Ionicons>
                                 <Text style={styles.followtext}> Edit Profile </Text>
@@ -84,7 +85,7 @@ export default function Profileposterforposter(navigation) {
                 </View>
             </View>
 
-        </View>
+        </ImageBackground>
     )
 }
 

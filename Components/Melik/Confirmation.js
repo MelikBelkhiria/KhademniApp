@@ -1,10 +1,8 @@
 import {React, useState} from 'react';
-import { StyleSheet, Text, View, Image,Pressable} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { StyleSheet, Text, View, Image,Pressable,ImageBackground} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import DropDownLocation from './DropDownLocation'
-import DropDownTime from './DropDownTime';
-import DropDownRating from './DropDownRating copy';
+import { Ionicons } from '@expo/vector-icons';
+
 import ConfirmCard from './ConfirmCard'
 
 
@@ -12,11 +10,22 @@ import ConfirmCard from './ConfirmCard'
 
 export default function Confirmation({ route,navigation }) {
   const { Title, Statut, Date, uri, onConfirm } = route.params;
-
-  const [candidates, setCondidates]= useState([{id:0,fullName: 'Maria Ben Moulehem', Location: 'Tunis', Date:'14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1'},
-  {id:1, fullName: 'Salima Ben Yedder', Location: 'Sousse', Date:'10/02/2023', uri:'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1'}]) 
-
+const [sortOption, setSortOption] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [openSortOption, setOpenSortOption] = useState(false);
+const [openSortOrder, setOpenSortOrder] = useState(false);
+  const [candidates, setCandidates] = useState([
+    { id: 0, fullName: 'Maria Ben Moulehem', location: 'Tunis', date: '14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1', rating: 4 },
+    { id: 1, fullName: 'Salima Ben Yedder', location: 'Sousse', date: '10/02/2023', uri: 'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1', rating: 3 },
+  ]);
   
+  const sortCandidates = (option, order) => {
+    let sortedCandidates = [...candidates];
+    if (option === 'rating') {
+      sortedCandidates.sort((a, b) => order === 'asc' ? -a.rating + b.rating : - b.rating + a.rating);
+    }
+    return order === 'desc' ? sortedCandidates.reverse() : sortedCandidates;
+  };
 
   const onReject = (id) => {
      setCondidates(candidates.filter((item) => item.id !== id ))
@@ -27,40 +36,49 @@ export default function Confirmation({ route,navigation }) {
 
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <ImageBackground source={require("../../assets/image5.png")} style={styles.container}>
+         <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{Title}</Text>
         </View>
         {uri && <Image style={styles.image} source={{ uri }} />}
       </View>
 
-    <View style={styles.filterContainer}>
+  <View style={styles.filterContainer}>
+  <Ionicons
+          name="star"
+          size={40}
+          color="gold"
 
-      <View  style={{marginLeft: 30}}>
-      <DropDownLocation/>
-      </View>
-
-      <View  style={{marginLeft: 30}}>
-      <DropDownTime/>
-      </View>
-
-      <View style={{marginLeft: 30, marginRight: 30}}>
-      <DropDownRating/>
-      </View>
-
-    </View>
+        />
+    <DropDownPicker
+      items={[
+        { label: 'Ascending', value: 'asc' },
+        { label: 'Descending', value: 'desc' },
+      ]}
+      defaultValue={sortOrder}
+      placeholder="Order"
+      containerStyle={{ height: 40, width: 150 }}
+      open={openSortOrder}
+      setOpen={setOpenSortOrder}
+      value={sortOrder}
+      labelStyle={{color:"white"}}
+      style={{ backgroundColor: '#18C0C1' }}
+      setValue={setSortOrder}
+      
+    />
+</View>
 
  
-    {candidates.map((service, index) => (
-        <ConfirmCard key={index} name={service.fullName} Location={service.Location} Date={service.Date} uri={service.uri} id={service.id} onReject={onReject} onConfirm={onConfirm}/>
+{sortCandidates(sortOption, sortOrder).map((service) => (
+        <ConfirmCard key={service.id} name={service.fullName} Location={service.location} Date={service.date} rating={service.rating} uri={service.uri} id={service.id} onReject={onReject} onConfirm={onConfirm} />
       ))}
 
-      
+
       <View style={styles.content}>
         {/* Your confirmation content */}
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -70,10 +88,17 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:'center',
   },
+
+  filterContainer:{
+    flexDirection:'row',
+    marginTop:5,
+    zIndex:2
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    marginTop:40
   },
   titleContainer: {
     flex: 1,
@@ -84,9 +109,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft:30
   },
-
-  filterContainer:{
-    flexDirection:'row',
+  image: {
+    width:80,
+    height: 80,
+    borderRadius: 40,
+    marginRight:50
   },
 
   statut: {
@@ -104,12 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor:'yellow',
     width:69
   },
-  image: {
-    width:80,
-    height: 80,
-    borderRadius: 40,
-    marginRight:50
-  },
+
   content: {
     flex: 1,
     alignItems: 'center',

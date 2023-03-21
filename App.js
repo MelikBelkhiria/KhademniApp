@@ -65,7 +65,7 @@ export default function App() {
         <Tab.Screen
           name="HomeScreen"
           component={userType === "Employeur" ? ServicePosterHome : Search }
-          options={{
+          options={{headerShown:false,
             tabBarIcon: ({ color }) => (
               <Ionicons
                 name="home-outline"
