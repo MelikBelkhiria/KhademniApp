@@ -30,7 +30,7 @@ export default function Home({navigation}) {
           Besoins d'argent supplémentaires ? Notre Alicqtion facilite la
           recherche d'un emploi temporaire.
         </Text>
-        <TouchableOpacity style={styles.login} onPress={() => {navigation.navigate("login")}}>
+        <TouchableOpacity style={styles.login} onPress={() => {navigation.navigate("Login")}}>
           <Text style={styles.logintext}>Se connecter</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.signup} onPress={() => {navigation.navigate("RegistrationScreen")}}>

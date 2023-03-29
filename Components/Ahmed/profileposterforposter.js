@@ -10,6 +10,13 @@ import { openBrowserAsync } from 'expo-web-browser';
 
 
 export default function Profileposterforposter(navigation) {
+const [saved,setsaved]= useState(false)
+
+const savejob = () =>{
+    setsaved(!saved)
+};
+
+
     const [follow, setfollow] = useState(false);
     const menuItemsToDisplay = [
         { name: 'service cuisson ', id: '1A', number: '4' },
@@ -25,7 +32,9 @@ export default function Profileposterforposter(navigation) {
     const Item = ({ name, number }) => (
         <View style={styles.containerflatlist} >
             <Text style={styles.textrating}>{name}</Text>
-            <Ionicons style={styles.star} size={17} name="star-outline"> </Ionicons>
+          
+            <Ionicons style={styles.star} size={17} name="star-outline"> :   </Ionicons>
+         
             <Text style={styles.numberating} >{number}</Text>
         </View>);
 

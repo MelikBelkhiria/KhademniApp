@@ -38,7 +38,7 @@ const handleall =() =>{
 
     return (
         <View style={styles.container}>
-    <TouchableOpacity onPress={()=>navigation.navigate("Search") }><Ionicons style={styles.goback} name="arrow-back-outline" size={30}></Ionicons></TouchableOpacity>
+   
             <View style={styles.headercontainer}>
                 <View style={styles.containerprofile}>
                     <Image style={styles.imageprofile} resizeMode="contain" source={require("./257343671_446285320177426_6925597833109609576_n-e1640194834882.jpg")} />
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     headercontainer: {
         flex: 0.25,
         flexDirection: 'row',
-        marginTop: 4
+       
     },
     containerprofile: {
         flexDirection: 'row',
