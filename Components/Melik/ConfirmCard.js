@@ -1,6 +1,7 @@
 import {React, useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
+import Rating from "../../Utlity/Stars"
 
 export default function ConfirmCard(props) {
 
@@ -24,7 +25,7 @@ export default function ConfirmCard(props) {
       
       <View style={{marginRight:15}}>
       <Image source={{ uri: props.uri }} style={styles.pdp} />
-      <Image source={require('./stars.png')} style={{marginTop:10}} />
+      <Rating numberOfStars={props.rating} />
       </View>
 
 

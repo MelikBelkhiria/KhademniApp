@@ -4,6 +4,7 @@ import Card from './Card';
 import ConfirmCard from './ConfirmCard'
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ImageBackground } from 'react-native';
 
 export default function ServicePosterHome({navigation}) {
   const [myServices,setMyServices] =useState( [
@@ -29,7 +30,9 @@ export default function ServicePosterHome({navigation}) {
   };
 
   return (
-    <View style={Melik.container}>
+    <ImageBackground source={require("../../assets/image5.png")} style={Melik.container}>
+
+
       <View style={Melik.row}>
         <Text style={Melik.text}>Bienvenue Samira Jannet!</Text>
         <Pressable onPress={()=>navigation.navigate("profileposterforposter")}>
@@ -50,7 +53,7 @@ export default function ServicePosterHome({navigation}) {
       <TouchableOpacity style={Melik.addButton} onPress={()=>navigation.navigate("ServicePoster5")}>
         <Text style={Melik.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -60,7 +63,7 @@ const Melik = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     paddingTop: 60
   },
-  row: {
+  row: {width:"80%",
     flexDirection: 'row',
     alignItems: 'center'
   },

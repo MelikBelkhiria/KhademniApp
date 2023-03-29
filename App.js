@@ -21,7 +21,7 @@ import Chat from "./Components/Skander/Chat";
 import Notifications from "./Components/Skander/Notifications";
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
-
+/**please work */
 const HomeScreen = () => {
   return (
     <View>
@@ -32,7 +32,11 @@ const HomeScreen = () => {
 
 const Tab = createBottomTabNavigator();
 export default function App() {
+  const [userType, setUserType] = useState("");
 
+  const onUserTypeSelect = (selectedOption) => {
+    setUserType(selectedOption);
+  };
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -60,8 +64,8 @@ export default function App() {
         />
         <Tab.Screen
           name="HomeScreen"
-          component={Search} /*Search*/
-          options={{
+          component={userType === "Employeur" ? ServicePosterHome : Search }
+          options={{headerShown:false,
             tabBarIcon: ({ color }) => (
               <Ionicons
                 name="home-outline"
@@ -98,7 +102,8 @@ export default function App() {
             tabBarButton: () => null,
             tabBarVisible: false,
           }} />
-        <Tab.Screen name="RegistrationScreen" component={RegistrationScreen}           options={{
+        <Tab.Screen name="RegistrationScreen" component={RegistrationScreen} initialParams={{ onUserTypeSelect: onUserTypeSelect }}   options={{
+
             headerShown:false,
             tabBarButton: () => null,
             tabBarVisible: false,

@@ -118,16 +118,16 @@ import {
   TextInput,
   Button,
   Image,
-  TouchableOpacity,
+  TouchableOpacity,ImageBackground
 } from "react-native";
 
-export default function ServicePoster3() {
+export default function ServicePoster3({navigation}) {
   const [title, settitle] = useState("");
   const [location, setlocation] = useState("");
   const [Description, setDescription] = useState("");
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require("../../assets/image5.png")} style={styles.container}>
       <Image style={styles.image} source={require("../Yosr/imageee.png")} />
 
       <Text style={styles.text1}> Title : </Text>
@@ -160,12 +160,12 @@ export default function ServicePoster3() {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.SaveBtn}>
-          <Text style={styles.loginText}>SAVE</Text>
+        <TouchableOpacity style={styles.SaveBtn} onPress={()=>navigation.navigate("HomeScreen")}>
+          <Text style={styles.loginText}>Save</Text>
         </TouchableOpacity>
       </View>
       <View></View>
-    </View>
+    </ImageBackground>
   );
 }
 

@@ -7,7 +7,7 @@ import {
   TextInput,
   Button,
   Image,
-  TouchableOpacity,
+  TouchableOpacity,ImageBackground
 } 
 
 from "react-native";
@@ -24,7 +24,7 @@ export default function ServicePoster5({navigation}) {
  
   
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require("../../assets/image5.png")} style={styles.container}>
         <Image style={styles.image} source={require("../Yosr/imageee.png")} />
       
 
@@ -71,7 +71,7 @@ export default function ServicePoster5({navigation}) {
         /> 
       </View> 
       <View>
-      <TouchableOpacity style={styles.PostBtn} onPress={()=>navigation.navigate("ServicePosterHome")}>
+      <TouchableOpacity style={styles.PostBtn} onPress={()=>navigation.navigate("HomeScreen")}>
         <Text style={styles.loginText}>POST</Text> 
       </TouchableOpacity> 
     </View> 
@@ -79,7 +79,7 @@ export default function ServicePoster5({navigation}) {
     
     </View>
     
-  </View>
+  </ImageBackground>
   );
 }
 
@@ -91,9 +91,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
+    marginTop:50,
     resizeMode:"contain",
-    width: 160,
-    height: 160,
+    width: 100,
+    height: 100,
 
   },
   inputView: {
@@ -133,7 +134,6 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
     backgroundColor: "#18C0C1",
   },
   text:{ 
