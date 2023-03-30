@@ -49,7 +49,7 @@ const Tab = createBottomTabNavigator();
           
         }}
         
-        initialRouteName="Search"
+        initialRouteName="ServicePoster"
       >
         <Tab.Screen
           name="Chat"

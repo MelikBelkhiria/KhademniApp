@@ -47,7 +47,7 @@ const Stack = createNativeStackNavigator();
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="ServicePosterHome" component={ServicePosterHome} />
+          <Stack.Screen name="ServicePoster" component={ServicePosterHome} />
           <Stack.Screen name="Confirmation" component={Confirmation} />
           <Stack.Screen name='RegistrationScreen' component ={RegistrationScreen}/>
         

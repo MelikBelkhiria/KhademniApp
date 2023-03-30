@@ -132,7 +132,7 @@ const RegistrationScreen = ({navigation,route}) => {
                 fontWeight: 'bold',
                 marginVertical:20
             }}>
-            Vous avez déjà un compte? <Text onPress={()=>navigation.navigate('login')} style={{color:"#18C0C1"}}>Se connecter</Text> 
+            Vous avez déjà un compte? <Text onPress={()=>navigation.navigate('Login')} style={{color:"#18C0C1"}}>Se connecter</Text> 
             </Text>
           </View>
         </ScrollView>

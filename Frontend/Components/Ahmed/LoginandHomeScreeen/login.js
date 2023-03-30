@@ -51,7 +51,7 @@ export default function Login({ navigation }) {
             onChangeText={(value) => setPassword(value)}
             password
           />
-          <Button title="Se connecter" onPress={handleLogin} />
+          <Button title="Se connecter" onPress={navigation.navigate("DrawNavi")} />
           <Text
             style={{
               color: COLORS.black,
