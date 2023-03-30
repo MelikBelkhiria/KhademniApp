@@ -10,7 +10,16 @@ import { ImageBackground } from 'react-native';
 
 
 
-export default function Profileposterforposter({navigation}) {
+
+export default function Profileposterforposter(navigation) {
+const [saved,setsaved]= useState(false)
+
+const savejob = () =>{
+    setsaved(!saved)
+};
+
+
+
     const [follow, setfollow] = useState(false);
     const menuItemsToDisplay = [
         { name: 'service cuisson ', id: '1A', number: '4' },
@@ -27,6 +36,7 @@ export default function Profileposterforposter({navigation}) {
         <View style={styles.containerflatlist} >
             <Text style={styles.textrating}>{name}</Text>
             <Ionicons style={styles.star} size={17} name="star"> </Ionicons>
+
             <Text style={styles.numberating} >{number}</Text>
         </View>);
 

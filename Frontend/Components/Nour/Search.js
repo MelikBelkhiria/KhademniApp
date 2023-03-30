@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import Profileofseekerforseeker from '../Ahmed/profileofseekerforseeker';
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 const jobs = [
-    { id: '1', name: 'Cuisinier', employer: 'Hippo', price: 80, location: 'Lac2', image: require('../../assets/cuisinier.jpg') },
-    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', price: 65, location: 'Lac2', image: require('../../assets/jardinier.jpg') },
-    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', price: 85, location: 'Marsa', image: require('../../assets/fmm.jpg') },
-    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, location: 'Marsa', image: require('../../assets/RIP.jpg') },
+    { id: '1', name: 'Cuisinier', employer: 'Hippo', numberofstars: '4', price: 80, location: 'Bizert', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
+    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', numberofstars: '5', price: 65, location: 'Lac2', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
+    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', numberofstars: '3', price: 85, location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
+    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, numberofstars: '4', location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
 ];
 
-const JobCard = ({ job,navigation }) => {
+const JobCard = ({ job }) => {
+
+    const [saved, setsaved] = useState(false)
+
+    const savejob = () => {
+        setsaved(!saved)
+    };
+ 
     return (
-        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("Application")}>
-            <Image source={job.image} style={styles.image}  />
+        <TouchableOpacity style={styles.card}>
+            <View>
+                <Image source={job.image} style={styles.image} />
+                <View style={styles.starscontainer}>
+                <Ionicons style={styles.star} size={17} name="star"></Ionicons>
+                <Text  style={styles.nbrstars} > {job.numberofstars} </Text>
+                </View>
+            </View>
             <View style={styles.jobInfo}>
                 <Text style={styles.name}>{job.name}</Text>
                 <Text style={styles.price}>{job.price}€</Text>
@@ -21,15 +34,17 @@ const JobCard = ({ job,navigation }) => {
 
                 <Text style={styles.location}>{job.location}</Text>
             </View>
+            <TouchableOpacity onPress={savejob} >
+            {saved ?  <Ionicons style={styles.save} name="bookmark" size={28}></Ionicons> : <Ionicons style={styles.save} name="bookmark-outline" size={28}></Ionicons> }
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 };
 
-const Search = ({navigation}) => {
+const JobSearchPage = (navigation) => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
-    const [sortLoc, setSortLoc] = useState('Lac2');
-    const [selectedLocation, setSelectedLocation] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedOption, setSelectedOption] = useState(false);
     const [optionsVisible, setOptionsVisible] = useState(false);
@@ -39,11 +54,17 @@ const Search = ({navigation}) => {
         { label: 'Ascending', value: 'asc' },
         { label: 'Descending', value: 'desc' },
     ];
+    const locations = [
+        { label: 'Lac2', value: 'L2' },
+        { label: 'Marsa', value: 'M' },
+        { label: 'Bizert', value: 'B' },
+    ];
+
 
     const handleBothOptions = (option) => {
         setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
         handleFilterPrice();
-        handleOptionPress(option)
+        handleOptionPress(option);
     };
 
     const handleOptionPress = (option) => {
@@ -54,14 +75,13 @@ const Search = ({navigation}) => {
     const toggleOptionsVisible = () => {
         setOptionsVisible(!optionsVisible);
     };
-    const handleBothLocations = (job) => {
-        setSortLoc(sortLoc === 'Lac2' ? 'Marsa' : 'Lac2');
-        handleFilterLocation(job.location);
-        handleLocationsPress(job);
+    const handleBothLocations = (location) => {
+        handleFilterLocation(location.label);
+        handleLocationsPress(location);
     };
 
-    const handleLocationsPress = (job) => {
-        setSelectedLocation(job);
+    const handleLocationsPress = (location) => {
+        setSelectedLocation(location);
         setLocationsVisible(false);
     };
 
@@ -105,13 +125,14 @@ const Search = ({navigation}) => {
         <View style={styles.container}>
 
             <View style={styles.searchBarContainer}>
+                <Ionicons name='search-outline' size={22}></Ionicons>
                 <TextInput
-                    placeholder="Search for jobs"
+                    placeholder="Search for jobs ..."
                     value={searchQuery}
                     onChangeText={handleSearch}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("profileofseekerforseeker")}  ><Image resizeMode='contain' source={require('../../assets/hc.jpg')} style={styles.img}  /></TouchableOpacity>
+               
             </View>
             <View style={styles.a}>
                 <View>
@@ -126,7 +147,6 @@ const Search = ({navigation}) => {
                                     key={option.value}
                                     onPress={() => handleBothOptions(option)}
                                     style={styles.e}
-                                    
                                 >
                                     <Text style={styles.f}>{option.label}</Text>
                                 </TouchableOpacity>
@@ -135,47 +155,67 @@ const Search = ({navigation}) => {
                     )}
                 </View>
                 <View>
-                    
                     <TouchableOpacity onPress={toggleLocationsVisible} style={styles.cc}>
-                        <Text style={styles.c}>{selectedLocation ? selectedLocation.location : 'Location'}</Text>
+                        <Text style={styles.c}>{selectedLocation ? selectedLocation.label : 'Location'}</Text>
                         <Feather name={locationsVisible ? 'chevron-up' : 'chevron-down'} size={24} color="#fff" />
                     </TouchableOpacity>
 
-                   
+                    {locationsVisible && (
+                        <ScrollView style={styles.d}>
+                            {locations.map((location) => (
+                                <TouchableOpacity
+                                    key={location.value}
+                                    onPress={() => handleBothLocations(location)}
+                                    style={styles.e}
+                                >
+                                    <Text style={styles.f}>{location.label}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    )}
                 </View>
 
 
             </View>
-            
             <FlatList
                 data={filteredJobs}
                 keyExtractor={job => job.id}
-                renderItem={({ item }) =>(<JobCard navigation={navigation} job={item}/>)}
+                renderItem={({ item }) => <JobCard job={item} />}
                 contentContainerStyle={styles.list}
             />
-          
         </View>
 
     );
 };
 
 const styles = StyleSheet.create({
+
     searchBarContainer: {
-        width: '75%',
-        marginTop: 80,
-        marginLeft: 20,
+        width: '90%',
+
+        marginLeft: 15,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderRadius: 30,
+        borderRadius: 20,
         paddingHorizontal: 25,
         marginVertical: 20,
-        borderColor: '#18C0C1',
-        borderWidth: 1.2,
+        borderColor: 'white',
+        borderWidth: 1,
+        height: 45,
+        backgroundColor:'#e7f6f5'
     },
     container: {
         flex: 1,
         backgroundColor: '#FFF',
+    },
+    starscontainer:{
+        flexDirection:"row"
+    },
+    nbrstars:{
+        marginTop:3,
+        marginLeft:3,
+        fontSize:16
     },
     list: {
         padding: 20,
@@ -183,7 +223,7 @@ const styles = StyleSheet.create({
     card: {
         height: 120,
         marginBottom: 20,
-        borderRadius: 70,
+        borderRadius: 20,
         flexDirection: 'row',
         backgroundColor: '#FFF',
         shadowColor: '#000',
@@ -196,14 +236,17 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     image: {
-        width: 120,
-        height: '100%',
-        borderRadius: 70,
+        width: 70,
+        height: 70,
+        borderRadius: 50,
+        marginTop: 14,
+        marginLeft: 10
     },
     jobInfo: {
         flex: 1,
         padding: 10,
         justifyContent: 'space-around',
+        paddingLeft: 25
     },
     name: {
         fontWeight: 'bold',
@@ -222,9 +265,7 @@ const styles = StyleSheet.create({
 
     },
     a: {
-
         flexDirection: 'row',
-
         alignItems: "center",
         shadowOffset: {
             width: 0,
@@ -232,6 +273,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
+        marginTop: 0,
+        marginBottom: 20
 
     },
     b: {
@@ -239,12 +282,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#18C0C1',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 30,
+ 
         marginLeft: 20,
-        padding: 20,
+        padding: 18,
         width: 150,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
+
     },
     c: {
         color: '#fff',
@@ -254,16 +298,16 @@ const styles = StyleSheet.create({
     },
     cc: {
         flexDirection: 'row',
-        marginTop: 30,
-
-        padding: 20,
+      
+        padding: 18,
         width: 150,
         alignItems: 'center',
         backgroundColor: '#18C0C1',
         justifyContent: 'space-between',
         marginLeft: 20,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
+
     },
     d: {
         backgroundColor: '#18C0C1',
@@ -293,22 +337,32 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     img: {
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         marginLeft: 20,
-        marginBottom:400,
-        borderRadius:50,
+        marginBottom: 400,
+        borderRadius: 50,
     },
     button: {
         position: 'absolute',
-        top: -18,
-        left: 280,
+        top: -16,
+        left: 283,
         borderRadius: 30,
         padding: 10,
-        display:"flex",
-        justifyContent:"space-between",
-        
+        display: "flex",
+        justifyContent: "space-between",
+
     },
+    star: {
+        color: '#D5AB55',
+        marginTop: 4,
+        marginLeft: 20
+    },
+    save: {
+        marginRight: 16,
+        marginTop: 10,
+
+    }
 });
 
-export default Search;
+export default JobSearchPage;
