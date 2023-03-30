@@ -25,11 +25,16 @@ export default function DrawNavi({navigation,}) {
 
 const CustomDrawer=(props)=>{
 return(
-<View style={{flex:1, marginTop:20}}>
-<DrawerContentScrollView {...props} style={{marginTop:30 }}>
-<Image style={{width:130,height:130,borderRadius:70,alignSelf:"center",marginBottom:10}} source={require("./IMG_1368-Modifica_pp-1.jpg")}></Image>
-<Text style={{alignSelf:"center", marginBottom:30}}> Hello Salima
+<View style={{flex:1 }}>
+
+    <View  style={{flex:0.42,backgroundColor:'#38c0c0' ,marginBottom:10, borderBottomLeftRadius:22,borderBottomRightRadius:22}}>
+<Image style={{width:130,height:130,borderRadius:70,alignSelf:"center",marginBottom:30,marginTop:36}} source={require("./IMG_1368-Modifica_pp-1.jpg")}></Image>
+
+
+<Text style={{alignSelf:"center",marginTop:-18, marginBottom:30 , fontSize:20 ,color:'white'}}> Hello Salima
 </Text>
+</View>
+<DrawerContentScrollView {...props} >
 <DrawerItemList {...props}>
 </DrawerItemList>
 <Pressable  style={[styles.button, styles.buttonClose]}

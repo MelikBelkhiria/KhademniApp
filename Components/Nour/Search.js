@@ -125,6 +125,7 @@ const JobSearchPage = (navigation) => {
         <View style={styles.container}>
 
             <View style={styles.searchBarContainer}>
+                <Ionicons name='search-outline' size={22}></Ionicons>
                 <TextInput
                     placeholder="Search for jobs ..."
                     value={searchQuery}
