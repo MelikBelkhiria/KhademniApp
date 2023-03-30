@@ -37,7 +37,7 @@ const Tab = createBottomTabNavigator();
 
 
 
-    export default function tabnav () {
+    export default function Tabnav () {
   return (
     
       <Tab.Navigator

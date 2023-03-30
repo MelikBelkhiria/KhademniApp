@@ -26,10 +26,10 @@ const HomeScreen = ({ navigation }) => {
             style={styles.image}
             source={require("./digital-marketing.png")}
           />
-<Text style={styles.jobTitle}>Trouvez des services</Text>
-<Text style={styles.subTitle}>
-  Découvrez notre plateforme pour trouver des services ou des employeurs près de chez vous rapidement. Simplifiez votre vie avec notre application !
-</Text>
+          <Text style={styles.jobTitle}>Trouvez des services</Text>
+          <Text style={styles.subTitle}>
+            Découvrez notre plateforme pour trouver des services ou des employeurs près de chez vous rapidement. Simplifiez votre vie avec notre application !
+          </Text>
 
 
 
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 6,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom:50
+    marginBottom: 50
   },
   image: {
     height: 350,

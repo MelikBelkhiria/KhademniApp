@@ -13,7 +13,7 @@ DrawerItemList,
 import { Pressable } from 'react-native';
 import Home from './LoginandHomeScreeen/homescreen';
 import Profileofseekerforseeker from './profileofseekerforseeker';
-import tabnav from './tabnav';
+import Tabnav from './tabnav';
 import JobSearchPage from '../Nour/Search';
 import Help from './help';
 import JobCard from './savedpost';
@@ -80,7 +80,7 @@ drawerInactiveTintColor: 'gray',
 })}
 >
 
-<Drawer.Screen name="Home" component={tabnav} options={{headerTitle:" Khaddemni",headerTitleStyle:{fontSize:33},headerStyle:
+<Drawer.Screen name="Home" component={Tabnav} options={{headerTitle:" Khaddemni",headerTitleStyle:{fontSize:33},headerStyle:
 {
 backgroundColor: 'white',
 } }} />
