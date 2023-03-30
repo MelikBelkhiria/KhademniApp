@@ -22,7 +22,6 @@ const RegistrationScreen = ({navigation,route}) => {
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
-    route.params.onUserTypeSelect(option)
   };
   
   const handleEmailChange = (value) => {
@@ -58,7 +57,6 @@ const RegistrationScreen = ({navigation,route}) => {
     // Add the required user data
     const userData = {
       email: email,
-      username:username,
       fullName: fullName,
       userType: selectedOption === 'Employeur' ? 'employer' : 'job_seeker',
       phoneNumber: phoneNumber,
@@ -74,7 +72,7 @@ const RegistrationScreen = ({navigation,route}) => {
       // Handle the response (e.g., navigate to the HomeScreen)
       if (response.status === 201) {
         alert('User registered successfully');
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Login');
       } else {
         alert('An error occurred during registration');
       }
@@ -95,9 +93,9 @@ const RegistrationScreen = ({navigation,route}) => {
         <Text style={{color: COLORS.green, fontSize: 18, fontWeight: 'bold', marginVertical: 10,}}> Veuillez compléter ces informations:</Text>
         <View style={{marginVertical: 20}}>
           <Input placeholder="Entrer votre adresse email" iconName="email-outline" label="Email" value={email} onChangeText={handleEmailChange}/>
-          <Input placeholder="Username" iconName="phone-outline" label="Phone Number" onChangeText={handleUsernameChange}/>
-
           <Input placeholder="Entrer votre nom complet" iconName="account-outline" label="Fullname" value={fullName} onChangeText={handleFullNameChange}/>
+
+
           <View style={[styles.dropdown,{marginBottom:120}]}>
             <TouchableOpacity style={styles.dropdownButton}>
               <Text style={styles.dropdownButtonText}>

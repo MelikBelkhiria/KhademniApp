@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 45,
         backgroundColor:'#e7f6f5'
+        ,marginTop:50
     },
     container: {
         flex: 1,

@@ -18,7 +18,7 @@ const SplashScreen = ({ navigation }) => {
         useNativeDriver: true,
       }).start(() => {
         setTimeout(() => {
-          navigation.navigate('Home');
+          navigation.navigate('screenhome');
         }, 100);
       });
     });

@@ -28,7 +28,7 @@ const [openSortOrder, setOpenSortOrder] = useState(false);
   };
 
   const onReject = (id) => {
-     setCondidates(candidates.filter((item) => item.id !== id ))
+     setCandidates(candidates.filter((item) => item.id !== id ))
   }
 
 

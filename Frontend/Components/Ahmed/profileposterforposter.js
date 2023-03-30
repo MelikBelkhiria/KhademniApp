@@ -46,7 +46,6 @@ const savejob = () =>{
 
     return (
         <ImageBackground source={require("../../assets/image5.png")} style={styles.container}>
-    <Ionicons style={styles.goback}  name="arrow-back-outline" size={30} onPress={()=>navigation.navigate("HomeScreen")}></Ionicons>
             <View style={styles.headercontainer}>
                 <View style={styles.containerprofile}>
                     <Image style={styles.imageprofile} resizeMode="contain" source={require("./IMG_1368-Modifica_pp-1.jpg")} />
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     headercontainer: {
         flex: 0.25,
         flexDirection: 'row',
-        marginTop: 4
+        marginTop: 40
     },
     containerprofile: {
         flexDirection: 'row',

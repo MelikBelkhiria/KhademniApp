@@ -56,7 +56,7 @@ drawerLabelStyle={{marginLeft:-25}}
 screenOptions={({ route }) => ({
 drawerIcon: ({ focused, color, size }) => {
 let iconName;
-if (route.name === 'Home') {
+if (route.name === 'Tabnav') {
 iconName = focused ? 'home' : 'home-outline';
 }
 if (route.name === 'Help&Support') {
@@ -80,7 +80,7 @@ drawerInactiveTintColor: 'gray',
 })}
 >
 
-<Drawer.Screen name="Home" component={Tabnav} options={{headerTitle:" Khaddemni",headerTitleStyle:{fontSize:33},headerStyle:
+<Drawer.Screen name="Tabnav" component={Tabnav} options={{headerTitle:" Khaddemni",headerTitleStyle:{fontSize:33},headerStyle:
 {
 backgroundColor: 'white',
 } }} />

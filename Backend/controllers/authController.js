@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const db = require('../db'); // Import your database connection, adjust the path if needed
 
 exports.registerUser = async (req, res) => {
-    const { email,username, fullName, userType, phoneNumber, password } = req.body;
+    const { email, fullName, userType, phoneNumber, password } = req.body;
 
     // Validate input (you can add more validation if needed)
     if (!email || !fullName || !userType || !password) {
@@ -32,11 +32,11 @@ exports.registerUser = async (req, res) => {
                                     res.status(500).send({ message: 'An error occurred while hashing the password' });
                                 } else {
                                     // Save the user to the database
-                                    const insertQuery = `INSERT INTO users (email,username, full_name, user_type, phone_number, password_hash) VALUES ('${email}','${username}', '${fullName}', '${userType}', '${phoneNumber}', '${hashedPassword}')`;
+                                    const insertQuery = `INSERT INTO users (email, full_name, user_type, phone_number, password_hash) VALUES ('${email}', '${fullName}', '${userType}', '${phoneNumber}', '${hashedPassword}')`;
                                     db.query(insertQuery, (err, result) => {
                                         if (err) {
                                             console.error(err);
-                                            res.status(500).send({ message: 'An error occurred while registering the user' });
+                                            res.status(500).send({ message: 'An error occurred while registering the user', error: err });
                                         } else {
                                             res.status(201).send({ message: 'User registered successfully', user_id: result.insertId });
                                         }

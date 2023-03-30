@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   View,
   Text,
@@ -9,6 +11,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,Image
 } from 'react-native';
+import axios from 'axios';
 import Input from "../../Melik/src/views/components/Input";
 import Button from "../../Melik/src/views/components/Button";
 import COLORS from "../../Melik/src/conts/colors";
@@ -17,10 +20,30 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Handle login logic here
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://192.168.1.19:3001/api/auth/login", {
+        email,
+        password,
+      });
+  
+      const { user } = response.data;
+  
+      // Store the user type in AsyncStorage
+      await AsyncStorage.setItem('userType', user.userType);
+  
+      if (user.userType === 'employer') {
+        navigation.navigate('Tabnav', { screen: 'ServicePoster' });
+      } else {
+        navigation.navigate('Tabnav', { screen: 'Search' });
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Invalid email or password");
+    }
   };
-
+  
+  
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <ScrollView
@@ -51,7 +74,7 @@ export default function Login({ navigation }) {
             onChangeText={(value) => setPassword(value)}
             password
           />
-          <Button title="Se connecter" onPress={navigation.navigate("DrawNavi")} />
+          <Button title="Se connecter" onPress={handleLogin} />
           <Text
             style={{
               color: COLORS.black,
