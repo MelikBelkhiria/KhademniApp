@@ -42,7 +42,9 @@ const Stack = createNativeStackNavigator();
     export default function   App   ()  {
       return (
         <NavigationContainer>
-        <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{
+    headerShown: false
+  }}>
           <Stack.Screen name='Login' component= {Login}/>
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Home" component={Home} />
