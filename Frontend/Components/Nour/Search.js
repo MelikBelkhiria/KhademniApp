@@ -10,7 +10,7 @@ const jobs = [
     { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, numberofstars: '4', location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
 ];
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job,navigation }) => {
 
     const [saved, setsaved] = useState(false)
 
@@ -19,7 +19,7 @@ const JobCard = ({ job }) => {
     };
  
     return (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("Application")}>
             <View>
                 <Image source={job.image} style={styles.image} />
                 <View style={styles.starscontainer}>
@@ -41,7 +41,7 @@ const JobCard = ({ job }) => {
     );
 };
 
-const JobSearchPage = (navigation) => {
+const JobSearchPage = ({navigation}) => {
     const [filteredJobs, setFilteredJobs] = useState(jobs);
     const [sortOrder, setSortOrder] = useState('asc');
     const [selectedLocation, setSelectedLocation] = useState(null);
@@ -180,8 +180,9 @@ const JobSearchPage = (navigation) => {
             <FlatList
                 data={filteredJobs}
                 keyExtractor={job => job.id}
-                renderItem={({ item }) => <JobCard job={item} />}
+                renderItem={({ item }) => <JobCard job={item} navigation={navigation}/>}
                 contentContainerStyle={styles.list}
+                
             />
         </View>
 

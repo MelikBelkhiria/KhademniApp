@@ -33,9 +33,9 @@ export default function Login({ navigation }) {
       await AsyncStorage.setItem('userType', user.userType);
   
       if (user.userType === 'employer') {
-        navigation.navigate('Tabnav', { screen: 'ServicePoster' });
+        navigation.navigate('DrawNavi', { userType: 'employer' });
       } else {
-        navigation.navigate('Tabnav', { screen: 'Search' });
+        navigation.navigate('DrawNavi', { userType: 'seeker' });
       }
     } catch (error) {
       console.error(error);

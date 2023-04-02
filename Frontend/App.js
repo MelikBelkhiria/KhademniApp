@@ -20,6 +20,8 @@ import Chat from "./Components/Skander/Chat";
 import Notifications from "./Components/Skander/Notifications";
 import DrawNavi from "./Components/Ahmed/drawernav";
 import Tabnav from './Components/Ahmed/tabnav';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 
 
 import { View, Text } from 'react-native';
@@ -38,26 +40,27 @@ import HomeScreen from "./Components/Ahmed/LoginandHomeScreeen/homescreen";
 
 
 
+const RootStack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator();
 
-const Stack = createNativeStackNavigator();
-
+function AuthStackNavigator() {
+  return (
+    <AuthStack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
+      <AuthStack.Screen name="screenhome" component={HomeScreen} />
+      <AuthStack.Screen name="Login" component={Login} />
+      <AuthStack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+    </AuthStack.Navigator>
+  );
+}
 
 export default function App() {
   return (
-
-
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="splashsplash"
-
-        screenOptions={{
-          headerShown: false,
-        }}>
-          <Stack.Screen name="splashsplash" component={SplashScreen}></Stack.Screen>
-      <Stack.Screen name="screenhome" component={HomeScreen} />
-      <Stack.Screen name="Tabnav" component={Tabnav} />
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="RegistrationScreen" component={RegistrationScreen}></Stack.Screen>
-    </Stack.Navigator>
-    </NavigationContainer >
+      <RootStack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+        <RootStack.Screen name="DrawNavi" component={DrawNavi} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
-};
+}
