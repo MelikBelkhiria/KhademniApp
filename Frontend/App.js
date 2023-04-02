@@ -45,11 +45,13 @@ const AuthStack = createNativeStackNavigator();
 
 function AuthStackNavigator() {
   return (
-    <AuthStack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+    <AuthStack.Navigator initialRouteName="Search" screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
       <AuthStack.Screen name="screenhome" component={HomeScreen} />
       <AuthStack.Screen name="Login" component={Login} />
       <AuthStack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+      <AuthStack.Screen name="Search" component={Search} />
+
     </AuthStack.Navigator>
   );
 }

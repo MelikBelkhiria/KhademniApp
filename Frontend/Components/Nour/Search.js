@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons'
+import axios from 'axios';
+
 
 const jobs = [
     { id: '1', name: 'Cuisinier', employer: 'Hippo', numberofstars: '4', price: 80, location: 'Bizert', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
@@ -10,16 +12,17 @@ const jobs = [
     { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, numberofstars: '4', location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
 ];
 
-const JobCard = ({ job,navigation }) => {
 
-    const [saved, setsaved] = useState(false)
+const JobCard = ({ job }) => {
+
+    const [saved, setsaved] = useState(false);
 
     const savejob = () => {
         setsaved(!saved)
     };
  
     return (
-        <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate("Application")}>
+        <TouchableOpacity style={styles.card}>
             <View>
                 <Image source={job.image} style={styles.image} />
                 <View style={styles.starscontainer}>
@@ -28,9 +31,9 @@ const JobCard = ({ job,navigation }) => {
                 </View>
             </View>
             <View style={styles.jobInfo}>
-                <Text style={styles.name}>{job.name}</Text>
+                <Text style={styles.name}>{job.title}</Text>
                 <Text style={styles.price}>{job.price}€</Text>
-                <Text style={styles.employer}>{job.employer}</Text>
+                <Text style={styles.employer}>{job.description}</Text>
 
                 <Text style={styles.location}>{job.location}</Text>
             </View>
@@ -41,8 +44,9 @@ const JobCard = ({ job,navigation }) => {
     );
 };
 
-const JobSearchPage = ({navigation}) => {
-    const [filteredJobs, setFilteredJobs] = useState(jobs);
+const JobSearchPage = (navigation) => {
+    const [jobss, setJobs] = useState([""]);
+    const [filteredJobs, setFilteredJobs] = useState(jobss);
     const [sortOrder, setSortOrder] = useState('asc');
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -59,6 +63,17 @@ const JobSearchPage = ({navigation}) => {
         { label: 'Marsa', value: 'M' },
         { label: 'Bizert', value: 'B' },
     ];
+
+    useEffect(() => {
+        axios.get('http://192.168.100.107:19000/SearchTasks')
+          .then(response => setJobs(response.data))
+          .catch(error => console.error(error));
+         
+      }, []);
+
+      console.log(jobss);
+
+    
 
 
     const handleBothOptions = (option) => {
@@ -111,8 +126,8 @@ const JobSearchPage = ({navigation}) => {
     const handleSearch = (query) => {
         setSearchQuery(query);
         setFilteredJobs(jobs.filter(job =>
-            job.name.toLowerCase().includes(query.toLowerCase()) ||
-            job.employer.toLowerCase().includes(query.toLowerCase())
+            job.title.toLowerCase().includes(query.toLowerCase()) ||
+            job.description.toLowerCase().includes(query.toLowerCase())
         ));
     };
 
@@ -180,9 +195,8 @@ const JobSearchPage = ({navigation}) => {
             <FlatList
                 data={filteredJobs}
                 keyExtractor={job => job.id}
-                renderItem={({ item }) => <JobCard job={item} navigation={navigation}/>}
+                renderItem={({ item }) => <JobCard job={item} />}
                 contentContainerStyle={styles.list}
-                
             />
         </View>
 
