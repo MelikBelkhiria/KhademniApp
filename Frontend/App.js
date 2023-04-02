@@ -47,7 +47,7 @@ export default function App() {
 
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="splashsplash"
+      <Stack.Navigator initialRouteName="Search"
 
         screenOptions={{
           headerShown: false,
@@ -57,6 +57,8 @@ export default function App() {
       <Stack.Screen name="Tabnav" component={Tabnav} />
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="RegistrationScreen" component={RegistrationScreen}></Stack.Screen>
+      <Stack.Screen name="Search" component={Search}></Stack.Screen>
+
     </Stack.Navigator>
     </NavigationContainer >
   );
