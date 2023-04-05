@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons'
+import axios from 'axios'
 
 const jobs = [
     { id: '1', name: 'Cuisinier', employer: 'Hippo', numberofstars: '4', price: 80, location: 'Bizert', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
@@ -28,9 +29,9 @@ const JobCard = ({ job,navigation }) => {
                 </View>
             </View>
             <View style={styles.jobInfo}>
-                <Text style={styles.name}>{job.name}</Text>
+                <Text style={styles.name}>{job.title}</Text>
                 <Text style={styles.price}>{job.price}€</Text>
-                <Text style={styles.employer}>{job.employer}</Text>
+                <Text style={styles.employer}>{job.description}</Text>
 
                 <Text style={styles.location}>{job.location}</Text>
             </View>
@@ -42,7 +43,8 @@ const JobCard = ({ job,navigation }) => {
 };
 
 const JobSearchPage = ({navigation}) => {
-    const [filteredJobs, setFilteredJobs] = useState(jobs);
+    const [jobss, setJobs] = useState([""]);
+    const [filteredJobs, setFilteredJobs] = useState([]);
     const [sortOrder, setSortOrder] = useState('asc');
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -59,6 +61,17 @@ const JobSearchPage = ({navigation}) => {
         { label: 'Marsa', value: 'M' },
         { label: 'Bizert', value: 'B' },
     ];
+
+    useEffect(() => {
+        axios.get('http://192.168.49.68:3001/SearchTasks')
+          .then(response => {setJobs(response.data);
+          setFilteredJobs(response.data)})
+          .catch(error => console.error(error));
+         
+      }, []);
+
+
+      console.log(jobss);
 
 
     const handleBothOptions = (option) => {
@@ -91,11 +104,11 @@ const JobSearchPage = ({navigation}) => {
 
     const handleFilterLocation = (location) => {
         if (location == '') {
-            setFilteredJobs(jobs.filter(job => job.location = !location));
+            setFilteredJobs(jobss);
         }
         else {
             setSelectedLocation(location);
-            setFilteredJobs(jobs.filter(job => job.location === location));
+            setFilteredJobs(jobss.filter(job => job.location === location));
         };
 
     };
@@ -103,18 +116,18 @@ const JobSearchPage = ({navigation}) => {
     const handleFilterPrice = () => {
         const order = sortOrder === 'asc' ? 'desc' : 'asc';
         setSortOrder(order);
-        setFilteredJobs(prevJobs =>
-            prevJobs.slice().sort((a, b) => (order === 'desc' ? a.price - b.price : b.price - a.price))
+        setFilteredJobs(
+            jobss.slice().sort((a, b) => (order === 'desc' ? b.price - a.price : a.price - b.price))
         );
     };
 
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-        setFilteredJobs(jobs.filter(job =>
-            job.name.toLowerCase().includes(query.toLowerCase()) ||
-            job.employer.toLowerCase().includes(query.toLowerCase())
-        ));
-    };
+   const handleSearch = (query) => {
+    setSearchQuery(query);
+    setFilteredJobs(jobss.filter(job =>
+        job.title.toLowerCase().includes(query.toLowerCase()) ||
+        job.description.toLowerCase().includes(query.toLowerCase())
+    ));
+};
 
 
 

@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, SafeAreaView } from 'react-native';
 import Rating from "../../Utlity/Stars"
 const Application = ({navigation}) => {
   const [showMore, setShowMore] = useState(false);
@@ -75,6 +75,7 @@ const Application = ({navigation}) => {
 
 
     </View>
+    
   );
 };
 
