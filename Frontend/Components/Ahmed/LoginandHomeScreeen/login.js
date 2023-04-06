@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode from 'jwt-decode';
 
 import {
   View,
@@ -9,7 +10,8 @@ import {
   StyleSheet,
   SafeAreaView,
   KeyboardAvoidingView,
-  ScrollView,Image
+  ScrollView,
+  Image
 } from 'react-native';
 import axios from 'axios';
 import Input from "../../Melik/src/views/components/Input";
@@ -27,22 +29,25 @@ export default function Login({ navigation }) {
         password,
       });
   
-      const { user } = response.data;
+      const { token } = response.data;
   
-      // Store the user type in AsyncStorage
-      await AsyncStorage.setItem('userType', user.userType);
+      // Store the JWT token in AsyncStorage
+      await AsyncStorage.setItem('authToken', token);
   
-      if (user.userType === 'employer') {
+      const decodedToken = jwtDecode(token);
+      const userType = decodedToken.userType;
+      console.log('User Type in front-end:', userType); // Add this line
+
+      if (userType === 'employer') {
         navigation.navigate('DrawNavi', { userType: 'employer' });
       } else {
-        navigation.navigate('DrawNavi', { userType: 'seeker' });
+        navigation.navigate('DrawNavi', { userType: 'job_seeker' });
       }
     } catch (error) {
       console.error(error);
       alert("Invalid email or password");
     }
   };
-  
   
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>

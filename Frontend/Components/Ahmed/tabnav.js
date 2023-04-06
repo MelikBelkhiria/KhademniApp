@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from "react";
+import jwtDecode from 'jwt-decode';
 
 import ServicePosterHome from "../Melik/ServicePosterHome";
 import RegistrationScreen from "../Melik/src/views/screens/RegistrationsScreen";
@@ -60,8 +61,11 @@ function renderCustomHomeButton(navigation, userType, color) {
     
       useEffect(() => {
         async function fetchUserType() {
-          const storedUserType = await AsyncStorage.getItem('userType');
-          setUserType(storedUserType);
+          const token = await AsyncStorage.getItem('authToken');
+          if (token) {
+            const decodedToken = jwtDecode(token);
+            setUserType(decodedToken.userType);
+          }
           setLoading(false);
         }
         fetchUserType();
