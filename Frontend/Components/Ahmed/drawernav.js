@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet,View,Image } from 'react-native';
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 DrawerContentScrollView,
 DrawerItemList,
@@ -24,6 +24,21 @@ const Drawer = createDrawerNavigator();
 export default function DrawNavi({navigation,}) {
 
 const CustomDrawer=(props)=>{
+    const handleLogOut = async () => {
+        try {
+          // Clear the JWT token from AsyncStorage
+          await AsyncStorage.removeItem('authToken');
+          
+          // Navigate to the login screen or any other screen that requires authentication
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Auth', screen: 'Login' }],
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
 return(
 <View style={{flex:1 }}>
 
@@ -38,9 +53,8 @@ return(
 <DrawerItemList {...props}>
 </DrawerItemList>
 <Pressable  style={[styles.button, styles.buttonClose]}
-onPress={
-()=>{ navigation.navigate("Login")}}>
-<Text  style={styles.textStyle} >
+onPress={handleLogOut}>
+<Text style={styles.textStyle} >
 Log Out
 </Text>
 </Pressable>
