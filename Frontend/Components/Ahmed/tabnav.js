@@ -23,6 +23,8 @@ import Notifications from "../Skander/Notifications";
 import { Ionicons } from '@expo/vector-icons';
 import Confirmation from "../Melik/Confirmation";
 import { View, Text } from 'react-native';
+import Rating from "../../Utlity/Stars";
+import FeedbackScreen from "../Skander/Rating";
 
 
 
@@ -165,6 +167,12 @@ function renderCustomHomeButton(navigation, userType, color) {
             tabBarStyle: {
               display: "none",
             },
+          }} />
+                  <Tab.Screen name="Rating" component={FeedbackScreen}           options={{
+            headerShown:false,
+            tabBarButton: () => null,
+            tabBarVisible: false,
+
           }} />
         <Tab.Screen  name="Home" component={Home}    options={({ route }) => ({
     headerShown: false,

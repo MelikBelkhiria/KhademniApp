@@ -8,6 +8,10 @@ const authRoutes = require('./routes/authRoutes');
 const login = require('./routes/login');
 const chatRouter = require('./routes/chatRouter');
 const notifications= require('./routes/notifications')
+const ratingRoutes = require("./routes/ratingRoutes");
+
+
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -43,7 +47,7 @@ app.use('/api/auth', login);
 app.use('/services', servicesRouter);
 app.use('/chat', chatRouter);
 app.use('/notifications', notifications);
-
+app.use("/api", ratingRoutes);
 
 // Socket.IO
 io.on('connection', (socket) => {

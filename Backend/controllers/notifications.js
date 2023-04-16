@@ -18,7 +18,7 @@ const getUserNotifications = async (req, res) => {
 
     if (userType === 'job_seeker') {
       query = `
-      SELECT applications.application_id, services.employer_id, users.full_name AS employer_name, services.title, applications.application_status, applications.created_at, users.profile_pic
+      SELECT applications.application_id,services.service_id, services.employer_id, users.full_name AS employer_name, services.title, applications.application_status, applications.created_at, users.profile_pic
       FROM applications
       JOIN services ON applications.service_id = services.service_id
       JOIN users ON services.employer_id = users.user_id
@@ -28,7 +28,7 @@ const getUserNotifications = async (req, res) => {
       params = [userId];
     } else if (userType === 'employer') {
       query = `
-        SELECT applications.application_id, applications.job_seeker_id, services.title, applications.application_status, applications.created_at, users.profile_pic, users.full_name
+        SELECT applications.application_id, applications.job_seeker_id,services.service_id, services.title, applications.application_status, applications.created_at, users.profile_pic, users.full_name
         FROM applications
         JOIN services ON applications.service_id = services.service_id
         JOIN users ON applications.job_seeker_id = users.user_id
@@ -59,12 +59,14 @@ const getUserNotifications = async (req, res) => {
     const notifications = rows.map((notification) => {
       let message = '';
       let title = '';
+      let type='';
       console.log(notification)
       if (userType === 'job_seeker') {
         switch (notification.application_status) {
           case 'accepted':
             title = 'Application accepted';
-            message = 'Your application for '+notification.title+' has been accepted!';
+            message = 'Your application for '+notification.title+' has been accepted! Click to rate.';
+            type='rating'
             break;
           case 'rejected':
             title = 'Application rejected';
@@ -81,16 +83,19 @@ const getUserNotifications = async (req, res) => {
           title,
           message,
           date: notification.created_at,
+          service_id:notification.service_id,
+          type
         };
       } else if (userType === 'employer') {
         switch (notification.application_status) {
           case 'pending':
-            title= `Application accepted`
+            title= `Application`
             message = `${notification.full_name} applied to your service `+notification.title;
             break;
           case 'accepted':
             title = 'Application Accepted';
             message = 'You accepted an application for '+notification.title+' click to rate.';
+            type='rating'
             break;
           default:
             console.log("Unexpected application status:", notification.application_status);
@@ -103,6 +108,8 @@ const getUserNotifications = async (req, res) => {
           title,
           message,
           date: notification.created_at,
+          type,
+          service_id:notification.service_id
         };
       }
     });

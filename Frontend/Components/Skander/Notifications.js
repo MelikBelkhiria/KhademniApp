@@ -4,9 +4,16 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Item = ({ pic, title, message, date }) => {
+const Item = ({ pic, title, message, date,type,navigation,service_id }) => {
+  const handleNavigate = () => {
+    if (type === "rating") {
+      console.log(service_id)
+      navigation.navigate("Rating", { service_id: service_id });
+    }
+  };
+  
   return (
-    <View style={{ flex: 0.18, backgroundColor: "white", padding: 15, justifyContent: "space-between" }}>
+    <TouchableOpacity style={{ flex: 0.18, backgroundColor: "white", padding: 15, justifyContent: "space-between" }} onPress={handleNavigate}>
       <View style={{ flex: 0.5, marginTop: 5, justifyContent: "space-between", flexDirection: "row" }}>
         <View style={{ flexDirection: "row", display: "flex", alignItems: "center", flex: 0.8 }}>
           <Image style={{ borderRadius: 25, width: 50, height: 50 }} source={{ uri: pic }}></Image>
@@ -18,10 +25,10 @@ const Item = ({ pic, title, message, date }) => {
       <Text style={{ color: "#5FC6B7" }}>{date}</Text>
 
 
-    </View>
+    </TouchableOpacity>
   )
 }
-const Notifications = () => {
+const Notifications = ({navigation}) => {
   const [notifications, setNotifications] = useState([]);
 
   const [filteredNotifications, setFilteredNotifications] = useState([]);
@@ -49,9 +56,13 @@ const Notifications = () => {
                 pic: notification.pic,
                 title: notification.title,
                 message: notification.message,
-                date: new Date(notification.date).toLocaleString("en-US", {timeZone: "UTC"})
+                type:notification.type,
+                date: new Date(notification.date).toLocaleString("en-US", {timeZone: "UTC"}),
+                service_id: notification.service_id
               };
             });
+            console.log(formattedData);
+
             setNotifications(formattedData);
             setFilteredNotifications(formattedData);
           })
@@ -72,20 +83,26 @@ const Notifications = () => {
   const handleUrgentPress = () => {
     setUrgentSelected(true);
     setFilteredNotifications(
-      notifications.filter(
-        (item) =>
-          item.type === "rejection" || item.type === "accepted" || item.type === "feedback"
-      )
+      notifications.filter(notification => notification.type === "rating")
     );
   };
-
+  
   const handleAllPress = () => {
     setUrgentSelected(false);
     setFilteredNotifications(notifications);
   };
   const renderItem = ({ item }) => (
-    <Item pic={item.pic} title={item.title} message={item.message} date={item.date} />
+    <Item
+      pic={item.pic}
+      title={item.title}
+      message={item.message}
+      date={item.date}
+      type={item.type}
+      navigation={navigation}
+      service_id={item.service_id}
+    />
   );
+  
   return (
     <View style={{ flex: 1 }}>
     <View style={{ flex: 0.15, backgroundColor: "white", justifyContent: "center", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: "grey" }}>
