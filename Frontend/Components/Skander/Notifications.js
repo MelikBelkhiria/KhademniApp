@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 const Item = ({ pic, title, message, date }) => {
   return (
     <View style={{ flex: 0.18, backgroundColor: "white", padding: 15, justifyContent: "space-between" }}>
@@ -18,20 +22,57 @@ const Item = ({ pic, title, message, date }) => {
   )
 }
 const Notifications = () => {
-  const messages = [{ id: 1, pic: "https://img.freepik.com/free-photo/portrait-young-woman-with-beautiful-smile-pretty-gorgeous-girl-with-long-light-straight-hairs-brown-make-up-face-fashion-model-blue-eyes-posing_186202-8416.jpg?w=2000", title: "Jardinage", message: "Posté by Salma Delana", date: "28.10.2023 04:58",type:"follow" },
-  { id: 2, pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Eo_circle_red_letter-r.svg/2048px-Eo_circle_red_letter-r.svg.png", title: "Votre candidature pour cours de Piano a été rejetée !", message: "", date: "28.10.2022 04:58",type:"rejection" },
-  { id: 3, pic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLDVDWso_P2mOVeonGw2W0Qfv56CqWKzN63DFLhZyenw&s", title: "Your candidature pour Babysitting a été acceptée !", message: "", date: "28.10.2022 04:58",type:"accepted" },
-  { id: 4, pic: "https://www.themoviedb.org/t/p/original/iWdKjMry5Pt7vmxU7bmOQsIUyHa.jpg", title: "Vous avez terminé Etudes !", message: "Signalez votre achèvement et donnez votre avis", date: "28.10.2022 04:58",type:"completion" },
-  { id: 5, pic: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Eo_circle_red_letter-r.svg/2048px-Eo_circle_red_letter-r.svg.png", title: "Votre candidature pour Barman a été rejetée !", message: "", date: "28.10.2022 04:58",type:"rejection" },
+  const [notifications, setNotifications] = useState([]);
 
-  ];
-  const [filteredMessages, setFilteredMessages] = useState(messages);
+  const [filteredNotifications, setFilteredNotifications] = useState([]);
   const [urgentSelected, setUrgentSelected] = useState(false);
+  useEffect(() => {
+    const api = axios.create({
+      baseURL: 'http://192.168.1.25:3001',
+    });
+  
+    async function fetchData() {
+      try {
+        const token = await AsyncStorage.getItem('authToken');
+        api.get('/notifications', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        
+          .then((response) => response.data)
+          .then((data) => {
+            console.log(data);
+            const formattedData = data.map((notification) => {
+              return {
+                id: notification.id,
+                pic: notification.pic,
+                title: notification.title,
+                message: notification.message,
+                date: new Date(notification.date).toLocaleString("en-US", {timeZone: "UTC"})
+              };
+            });
+            setNotifications(formattedData);
+            setFilteredNotifications(formattedData);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+            console.error(error.response.data);
+          });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  
+    fetchData();
+  }, []);
 
+  
+  
   const handleUrgentPress = () => {
     setUrgentSelected(true);
-    setFilteredMessages(
-      messages.filter(
+    setFilteredNotifications(
+      notifications.filter(
         (item) =>
           item.type === "rejection" || item.type === "accepted" || item.type === "feedback"
       )
@@ -40,9 +81,8 @@ const Notifications = () => {
 
   const handleAllPress = () => {
     setUrgentSelected(false);
-    setFilteredMessages(messages);
+    setFilteredNotifications(notifications);
   };
-
   const renderItem = ({ item }) => (
     <Item pic={item.pic} title={item.title} message={item.message} date={item.date} />
   );
@@ -56,7 +96,7 @@ const Notifications = () => {
     </View>
     </View>
     <View style={{ flex: 0.85, backgroundColor: "#F2F3F8" }}>
-    <FlatList data={filteredMessages} renderItem={renderItem} keyExtractor={(item) => item.id} />
+    <FlatList data={filteredNotifications} renderItem={renderItem} keyExtractor={(item) => item.id.toString()} />
     </View>
     </View>
     );
