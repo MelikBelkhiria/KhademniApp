@@ -33,6 +33,7 @@ exports.login = (req, res) => {
         userType: user.user_type
       };
       console.log('User Type in back-end:', payload.userType); // Add this line
+      console.log("user id is ", payload.id)
 
       const token = jwt.sign(payload, 'your_jwt_secret', { expiresIn: '1h' });
       res.status(200).json({ message: 'Login successful', token });
