@@ -6,13 +6,12 @@ const servicesRouter = require('./routes/serviceRouter');
 const exampleRoute = require('./routes/exampleRoute');
 const authRoutes = require('./routes/authRoutes');
 const login = require('./routes/login');
+
 const SearchTasks = require('./routes/SearchTasks');
 const ApplyForTask = require('./routes/ApplyForTask');
 const chatRouter = require('./routes/chatRouter');
 const notifications= require('./routes/notifications')
 const ratingRoutes = require("./routes/ratingRoutes");
-
-
 
 
 const app = express();
@@ -46,6 +45,7 @@ app.use(
 app.use('/example', exampleRoute);
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', login);
+
 app.use(SearchTasks);
 app.use(ApplyForTask);
 app.use('/services', servicesRouter);

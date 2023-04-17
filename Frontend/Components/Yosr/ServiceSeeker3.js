@@ -8,31 +8,99 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  ScrollView,
 } 
 from "react-native";
+import axios from "axios";
 
 
 
 export default function ServiceSeeker3({navigation}) {
-  const [Name, setname] = useState("");
+  const [full_name, setFull_name] = useState("");
   const [Description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone_number, setPhone_number] = useState("");
+  const [address, setaddress] = useState("");
+  const [interests, setinterests] = useState("");
+  
+  
+  
  
+  const handleApplication = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://192.168.48.133:3001/api/updateUserProfile", {
+        user_id:2,
+        full_name: full_name,
+        Description: Description,
+        email: email,
+        phone_number:phone_number,
+        address:address,
+        interests: interests,
+       
+      }, { withCredentials: true });
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
   
   return (
-    <View style={styles.container}>
-        <Image style={styles.image} source={require("../Yosr/imag.png")} />
+    <ScrollView style={styles.container}>
+       <View style={styles.inputcontainer}>
       
-
+        <Image style={styles.image} source={require("../Yosr/imag.png")} />
+        
+       
       <StatusBar style="auto" />
-      <Text style={styles.text} >Name:</Text>
+      <Text style={styles.text} >full_name:</Text>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Input Name "
+          placeholder="Input full_name "
           placeholderTextColor="#003f5c"
-          onChangeText={(Name) => setname(Name)}
+          onChangeText={(full_name) => setFull_name(full_name)}
         /> 
       </View> 
+      <Text style={styles.text} >Email:</Text>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Input Email "
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setEmail(email)}
+        /> 
+      </View> 
+      <Text style={styles.text} >address:</Text>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Input address "
+          placeholderTextColor="#003f5c"
+          onChangeText={(address) => setaddress(address)}
+        /> 
+      </View> 
+      <Text style={styles.text} >interests:</Text>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Input interests "
+          placeholderTextColor="#003f5c"
+          onChangeText={(interests) => setinterests(interests)}
+        /> 
+      </View> 
+      <Text style={styles.text} >Phone_Number:</Text>
+      <View style={styles.inputView}>
+      <TextInput
+            style={styles.TextInput}
+            placeholder="Input Phone_Number "
+            placeholderTextColor="#003f5c"
+            keyboardType="numeric"
+
+            onChangeText={(phone_number) => setPhone_number(phone_number)}
+          />
+          </View>
       <Text style={styles.text1}>Cv:</Text>
        <View > 
       <TouchableOpacity style={styles.UploadCVBtn}>
@@ -52,15 +120,15 @@ export default function ServiceSeeker3({navigation}) {
         /> 
       </View> 
       <View>
-      <TouchableOpacity style={styles.SaveBtn} onPress={()=> navigation.navigate("profileofseekerforseeker")}>
+      <TouchableOpacity style={styles.SaveBtn} onPress={handleApplication}>
         <Text style={styles.loginText}>Save</Text> 
       </TouchableOpacity> 
 
   
     </View> 
     
-    
-  </View>
+    </View>
+  </ScrollView>
   );
 }
 
@@ -68,8 +136,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
+
+  },
+  inputcontainer:{
+    alignItems:"center"
   },
   image: {
     marginBottom: 100,
