@@ -17,7 +17,7 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
     e.preventDefault();
     try {
       const token = await AsyncStorage.getItem('authToken'); // assuming you are storing the token using AsyncStorage
-      await axios.post("http://192.168.49.234:3001/ApplyForTask/" + serviceId, {}, {
+      await axios.post("http://192.168.49.51:3001/ApplyForTask/" + serviceId, {}, {
         headers: {
           Authorization: 'Bearer '+ token
         },
