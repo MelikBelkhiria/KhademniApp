@@ -2,6 +2,8 @@ import { React, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 import Rating from "../../Utlity/Stars"
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Application = ({navigation, route}) => {
 
@@ -10,14 +12,24 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
 
   const [showMore, setShowMore] = useState(false);
 
-  const handleApplication = async (e) =>{
+
+  const handleApplication = async (e) => {
     e.preventDefault();
-    try{
-      await axios.post("http://192.168.3.14:3001/ApplyForTask/" + serviceId ,{ withCredentials: true })
-    }catch(err){
+    try {
+      const token = await AsyncStorage.getItem('authToken'); // assuming you are storing the token using AsyncStorage
+      await axios.post("http://192.168.49.234:3001/ApplyForTask/" + serviceId, {}, {
+        headers: {
+          Authorization: 'Bearer '+ token
+        },
+        withCredentials: true
+      });
+    } catch(err) {
       console.log(err)
     }
   }
+  
+  
+
 
   return (
     <View style={{ flex: 1 }}>

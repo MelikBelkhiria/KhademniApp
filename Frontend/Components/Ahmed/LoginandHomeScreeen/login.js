@@ -22,19 +22,25 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://192.168.3.14:3001/api/auth/login", {
+      const response = await axios.post("http://192.168.49.234:3001/api/auth/login", {
         email,
         password,
       });
+
   
-      const { token } = response.data;
+      const {token}  = response.data;
   
       // Store the JWT token in AsyncStorage
       await AsyncStorage.setItem('authToken', token);
   
       const decodedToken = jwtDecode(token);
+
+      console.log(decodedToken);
+
       const userType = decodedToken.userType;
       console.log('User Type in front-end:', userType); // Add this line
 

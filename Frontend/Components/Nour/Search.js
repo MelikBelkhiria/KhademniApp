@@ -23,7 +23,7 @@ const JobCard = ({ job,navigation }) => {
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("Application", { 
             title: job.title,
             price: job.price,
-            imageURI: job.imageURI,
+            imageURI: job.profile_pic,
             numberOfStars: job.numberOfStars,
             description: job.description,
             created_at: job.created_at,
@@ -76,7 +76,7 @@ const JobSearchPage = ({navigation}) => {
     ];
 
     useEffect(() => {
-        axios.get('http://192.168.3.14:3001/SearchTasks')
+        axios.get('http://192.168.49.234:3001/SearchTasks')
           .then(response => {setJobs(response.data);
           setFilteredJobs(response.data)})
           .catch(error => console.error(error));
