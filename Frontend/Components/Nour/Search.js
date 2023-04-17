@@ -27,9 +27,9 @@ const JobCard = ({ job,navigation }) => {
             numberOfStars: job.numberOfStars,
             description: job.description,
             created_at: job.created_at,
-            employer: job.employer,
+            employer: job.full_name,
             location: job.location,
-            field: job.field,
+            field: job.domain,
             serviceId: job.service_id
           })}>
           <View>
@@ -42,7 +42,7 @@ const JobCard = ({ job,navigation }) => {
           <View style={styles.jobInfo}>
             <Text style={styles.name}>{job.title}</Text>
             <Text style={styles.price}>{job.price}€</Text>
-            <Text style={styles.employer}>{job.employer}</Text>
+            <Text style={styles.employer}>{job.full_name}</Text>
             <Text style={styles.location}>{job.location}</Text>
           </View>
           <TouchableOpacity onPress={savejob} >
@@ -76,7 +76,7 @@ const JobSearchPage = ({navigation}) => {
     ];
 
     useEffect(() => {
-        axios.get('http://192.168.49.234:3001/SearchTasks')
+        axios.get('http://192.168.49.51:3001/SearchTasks')
           .then(response => {setJobs(response.data);
           setFilteredJobs(response.data)})
           .catch(error => console.error(error));

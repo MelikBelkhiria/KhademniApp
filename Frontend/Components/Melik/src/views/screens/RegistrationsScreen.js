@@ -66,7 +66,7 @@ const RegistrationScreen = ({navigation,route}) => {
     try {
       console.log(userData)
       // Send a request to the backend server
-      const response = await axios.post("http://192.168.49.234:3001/api/auth/register", userData);
+      const response = await axios.post("http://192.168.49.51:3001/api/auth/register", userData);
       console.log(userData)
   
       // Handle the response (e.g., navigate to the HomeScreen)
