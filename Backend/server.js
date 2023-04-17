@@ -6,8 +6,7 @@ const session = require('express-session'); // Add this line
 const exampleRoute = require('./routes/exampleRoute');
 const authRoutes = require('./routes/authRoutes'); 
 const login = require('./routes/login');
-const postService= require("./ahmed/Routes/PostRoute");
-const updateUserProfile= require("./ahmed/Routes/updateProfileRoute")
+
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -26,8 +25,6 @@ app.use(
 app.use('/example', exampleRoute);
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', login);
-app.use("/api" , postService);
-app.use("/api", updateUserProfile )
 
 // Start the server
 app.listen(port, () => {
