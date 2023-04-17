@@ -6,12 +6,13 @@ const servicesRouter = require('./routes/serviceRouter');
 const exampleRoute = require('./routes/exampleRoute');
 const authRoutes = require('./routes/authRoutes');
 const login = require('./routes/login');
-
+const postService=require('./ahmed/Routes/PostRoute')
 const SearchTasks = require('./routes/SearchTasks');
 const ApplyForTask = require('./routes/ApplyForTask');
 const chatRouter = require('./routes/chatRouter');
 const notifications= require('./routes/notifications')
 const ratingRoutes = require("./routes/ratingRoutes");
+const updateUserProfile=require('./ahmed/Routes/updateProfileRoute')
 
 
 const app = express();
@@ -52,6 +53,10 @@ app.use('/services', servicesRouter);
 app.use('/chat', chatRouter);
 app.use('/notifications', notifications);
 app.use("/api", ratingRoutes);
+app.use("/api",postService)
+app.use("/api",updateUserProfile)
+app.use(require('./routes/ApplyForTask'));
+
 
 // Socket.IO
 io.on('connection', (socket) => {

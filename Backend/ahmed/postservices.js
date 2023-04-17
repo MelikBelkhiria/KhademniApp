@@ -1,11 +1,14 @@
 const db = require('../db');
+const jwt = require("jsonwebtoken");
 
 
 
 exports.postService = (req, res) => {
-  const { employer_id,title, description, domain, location, price, start_time, duration } = req.body;
+  const { title, description, domain, location, price, start_time, duration } = req.body;
 
-    
+  const token = req.headers.authorization.split(' ')[1]; // Get the token from the request header
+  const decodedToken = jwt.verify(token, "your_jwt_secret");
+  const employer_id=decodedToken.id
   const service = {
     employer_id,
     title,

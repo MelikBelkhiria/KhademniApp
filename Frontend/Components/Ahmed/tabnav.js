@@ -10,7 +10,6 @@ import Login from "../Ahmed/LoginandHomeScreeen/login";
 import Home from "../Ahmed/LoginandHomeScreeen/homescreen";
 import ProfileposterForseeker from "./ProfileposterForseeker";
 import Profileofseekerforseeker from "./profileofseekerforseeker";
-import ServicePoster3 from "../Yosr/ServicePoster3";
 import ServicePoster5 from "../Yosr/ServicePoster5";
 import ServiceSeeker3 from "../Yosr/ServiceSeeker3";
 import Search from "../Nour/Search";
@@ -206,11 +205,7 @@ function renderCustomHomeButton(navigation, userType, color) {
               display: "none",
             },
           }} />
-        <Tab.Screen name="ServicePoster3" component={ServicePoster3}           options={{
-            headerShown:false,
-            tabBarButton: () => null,
-            tabBarVisible: false,
-          }} />
+
         <Tab.Screen name="ServicePoster5" component={ServicePoster5}           options={{
             headerShown:false,
             tabBarButton: () => null,

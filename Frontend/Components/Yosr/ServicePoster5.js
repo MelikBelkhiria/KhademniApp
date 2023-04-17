@@ -13,7 +13,7 @@ import {
   from "react-native";
 import axios from "axios";
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function ServicePoster5({ navigation }) {
@@ -52,8 +52,9 @@ const currentDate = selectedDate || date ;
   const handleApplication = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://192.168.48.133:3001/api/postService", {
-        employer_id:2,
+      const token = await AsyncStorage.getItem('authToken');
+
+      await axios.post("http://192.168.49.51:3001/api/postService", {
         title: title,
         location: location,
         price: Price,
@@ -61,7 +62,9 @@ const currentDate = selectedDate || date ;
         domain:domain,
         description: Description,
         start_time:start_time
-      }, { withCredentials: true });
+      }, {
+        headers: {
+            'Authorization': `Bearer ${token}`}});
     } catch (err) {
       console.log(err)
     }

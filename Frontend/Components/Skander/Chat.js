@@ -104,7 +104,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
   
 
   return (
-    <ImageBackground blurRadius={5} resizeMode='cover' source={require("../../assets/1076744.png")} style={styling.container}>
+    <ImageBackground blurRadius={0} resizeMode='cover' source={require("../../assets/1076744.png")} style={styling.container}>
       <Text style={styling.title}>Your Services</Text>
       <FlatList
         data={services}
