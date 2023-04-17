@@ -32,7 +32,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
 
   useEffect(() => {
     const api = axios.create({
-      baseURL: 'http://192.168.1.25:3001'
+      baseURL: 'http://192.168.49.51:3001'
     });
 
     async function fetchServices() {
@@ -211,7 +211,7 @@ const Chat = () => {
 
 
       // connect to socket.io server
-      const socket = io("http://192.168.1.25:3001", {
+      const socket = io("http://192.168.49.51:3001", {
         auth: {
           token: token,
         },
@@ -269,7 +269,7 @@ console.log("Selected service:", selectedService);
   const handleSendMessage = async () => {
     if (message.trim()) {
       const api = axios.create({ 
-        baseURL: 'http://192.168.1.25:3001'
+        baseURL: 'http://192.168.49.51:3001'
       });
 
       const data = {
@@ -302,7 +302,7 @@ console.log("Selected service:", selectedService);
   const fetchChatHistory = async () => {
     try {
       const api = axios.create({
-        baseURL: 'http://192.168.1.25:3001'
+        baseURL: 'http://192.168.49.51:3001'
       });
   
       const token = await AsyncStorage.getItem('authToken');
