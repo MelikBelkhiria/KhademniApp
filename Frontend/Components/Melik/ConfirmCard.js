@@ -1,74 +1,92 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 import Rating from "../../Utlity/Stars"
+import axios from 'axios';
 
 export default function ConfirmCard(props) {
 
-
-
-  const handleReject = (id) => {
-  props.onReject(id);
-  }
-
   const handleConfirm = (id) => {
-  props.onReject(id);
-  props.onConfirm(id);
+    console.log(id)
+    axios.post(`http://192.168.1.25:3001/confirm/${id}`)
+      .then(response => {
+        console.log(response.data);
+        props.navigation.navigate("ServicePoster"); // replace "ConfirmationScreen" with the name of the screen you want to navigate to
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
- 
+
+
+  const handleCancel = (id) => {
+    console.log(id)
+    axios.post(`http://192.168.1.25:3001/cancel/${id}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      props.onRemove();
+
+
+  }
+
+
   return (
 
     <TouchableOpacity style={styles.container} >
 
       <View style={styles.card}>
-      <View style={{flexDirection:'row'}}> 
-      
-      <View style={{marginRight:15}}>
-      <Image source={{ uri: props.uri }} style={styles.pdp} />
-      <Rating numberOfStars={props.rating} />
-      </View>
+        <View style={{ flexDirection: 'row' }}>
 
-
-      <View>
-      <Text style={styles.text}>{props.name}</Text>
-
-
-        <View style={styles.row1}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-            <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-            <Image
-              source={{
-                uri:
-                  'https://th.bing.com/th/id/R.e77d20cb58ee8b548e923dcd238545ef?rik=QuUECdQ9vsx5UA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_319799.png&ehk=jT8hIamvS2E%2bgBMjPv5E9AD9RTNHgcZw4%2fILW8S6xlk%3d&risl=&pid=ImgRaw&r=0',
-              }}
-              style={styles.image}
-            />
-            <Text style={styles.location}>{props.Location}</Text>
-            </View>
-            <View style={styles.buttons}>
-            <TouchableOpacity onPress={()=> handleConfirm(props.id)}>
-                    <Image source={require('./checked.png')} style={styles.confirm} />
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={()=>handleReject(props.id)}>
-                    <Image source={require('./cancel.png')} style={styles.cancel}/>
-            </TouchableOpacity>
-             </View>
+          <View style={{ marginRight: 15 }}>
+            <Image source={{ uri: props.uri }} style={styles.pdp} />
+            <Rating numberOfStars={props.rating} />
           </View>
 
 
-        </View>
-        <View style={styles.row2}>
-        <Image source={{ uri: 'https://cdn3.iconfinder.com/data/icons/city-elements-16/66/37-512.png' }} style={styles.image} />
-          <Text style={[styles.location]}>{props.Date}</Text>
-        </View>
+          <View>
+            <Text style={styles.text}>{props.name}</Text>
 
+
+            <View style={styles.row1}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <Image
+                    source={{
+                      uri:
+                        'https://th.bing.com/th/id/R.e77d20cb58ee8b548e923dcd238545ef?rik=QuUECdQ9vsx5UA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_319799.png&ehk=jT8hIamvS2E%2bgBMjPv5E9AD9RTNHgcZw4%2fILW8S6xlk%3d&risl=&pid=ImgRaw&r=0',
+                    }}
+                    style={styles.image}
+                  />
+                  <Text style={styles.location}>{props.Location}</Text>
+                </View>
+                <View style={styles.buttons}>
+                  <TouchableOpacity onPress={() => handleConfirm(props.id)}>
+                    <Image source={require('./checked.png')} style={styles.confirm} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => handleCancel(props.id)}>
+                    <Image source={require('./cancel.png')} style={styles.cancel} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+
+            </View>
+            <View style={styles.row2}>
+              <Image source={{ uri: 'https://cdn3.iconfinder.com/data/icons/city-elements-16/66/37-512.png' }} style={styles.image} />
+              <Text style={[styles.location]}>{props.Date}</Text>
+            </View>
+
+          </View>
         </View>
-      </View>
       </View>
     </TouchableOpacity>
-   
+
 
   );
 }
@@ -134,30 +152,30 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
-  confirm:{
-    marginLeft:80,
-    width:35,
-    height:35,
+  confirm: {
+    marginLeft: 80,
+    width: 35,
+    height: 35,
   },
 
-  cancel:{
-    marginLeft:10,
-    width:35,
-    height:35,
+  cancel: {
+    marginLeft: 10,
+    width: 35,
+    height: 35,
   },
 
-  pdp:{
-    width:70,
-    height:70,
+  pdp: {
+    width: 70,
+    height: 70,
     borderRadius: 50,
-    alignSelf:'center',
+    alignSelf: 'center',
   },
 
-  buttons:{
-    flexDirection:'row',
-    position:'absolute',
-    marginLeft:60,
+  buttons: {
+    flexDirection: 'row',
+    position: 'absolute',
+    marginLeft: 60,
   }
 
-  
+
 });

@@ -35,7 +35,7 @@ const Notifications = ({navigation}) => {
   const [urgentSelected, setUrgentSelected] = useState(false);
   useEffect(() => {
     const api = axios.create({
-      baseURL: 'http://192.168.49.51:3001',
+      baseURL: 'http://192.168.1.25:3001',
     });
   
     async function fetchData() {

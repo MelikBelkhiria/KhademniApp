@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 export default function Card(props) {
 
     const handlePress = () => {
-        if (props.Statut === 'En Attente') {
+        if (props.Statut === 'pending') {
           props.onPress();
         }
     };
@@ -14,11 +14,18 @@ export default function Card(props) {
       <View style={styles.card}>
         <View style={styles.row1}>
           <Text style={styles.text}>{props.Title}</Text>
-          <Text style={[styles.text, styles.statutText, styles.smallText, props.Statut === 'En Attente' ? styles.yellowBackground : styles.greenBackground]}>{props.Statut}</Text>
+          <Text style={[styles.text, styles.statutText, styles.smallText, props.Statut === 'pending' ? styles.yellowBackground : styles.greenBackground]}>{props.Statut}</Text>
         </View>
         <View style={styles.row2}>
           <Image source={{ uri: 'https://cdn3.iconfinder.com/data/icons/city-elements-16/66/37-512.png' }} style={styles.image} />
-          <Text style={[styles.text, styles.smallText]}>{props.Date}</Text>
+          <Text style={[styles.text, styles.smallText]}>{"Start time: " + new Intl.DateTimeFormat('en-US', { 
+  year: 'numeric', 
+  month: 'short', 
+  day: 'numeric', 
+  hour: 'numeric', 
+  minute: 'numeric', 
+  hour12: true 
+}).format(new Date(props.Date))}</Text>
         </View>
       </View>
     </TouchableOpacity>

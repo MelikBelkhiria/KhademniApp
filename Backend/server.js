@@ -13,6 +13,7 @@ const chatRouter = require('./routes/chatRouter');
 const notifications= require('./routes/notifications')
 const ratingRoutes = require("./routes/ratingRoutes");
 const updateUserProfile=require('./ahmed/Routes/updateProfileRoute')
+const myTask=require("./routes/myTask")
 
 
 const app = express();
@@ -55,7 +56,7 @@ app.use('/notifications', notifications);
 app.use("/api", ratingRoutes);
 app.use("/api",postService)
 app.use("/api",updateUserProfile)
-app.use(require('./routes/ApplyForTask'));
+app.use(myTask);
 
 
 // Socket.IO
