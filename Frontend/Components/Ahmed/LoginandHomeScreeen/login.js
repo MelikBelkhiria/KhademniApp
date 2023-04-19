@@ -11,7 +11,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
-  Image
+  Image, Platform
 } from 'react-native';
 import axios from 'axios';
 import Input from "../../Melik/src/views/components/Input";
@@ -51,8 +51,14 @@ export default function Login({ navigation }) {
   
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
       <ScrollView
-        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
+        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}
+      >
         <Text
           style={{ color: COLORS.black, fontSize: 39, fontWeight: 'bold' }}>
           Connexion
@@ -96,9 +102,10 @@ export default function Login({ navigation }) {
             </Text>
           </Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+        </ScrollView>
+    </KeyboardAvoidingView>
+  </SafeAreaView>
+);
 }
 const styles = StyleSheet.create({
 
