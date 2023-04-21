@@ -74,7 +74,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
               }
             }}
           >
-            <Text style={{fontSize:18}}>
+            <Text style={{fontSize:18,color:"white"}}>
               {applicant.applicant_name}
             </Text>
           </TouchableOpacity>
@@ -104,7 +104,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
   
 
   return (
-    <ImageBackground blurRadius={0} resizeMode='cover' source={require("../../assets/1076744.png")} style={styling.container}>
+    <ImageBackground source={require("../../assets/image5.png")} style={styling.container}>
       <Text style={styling.title}>Your Services</Text>
       <FlatList
         data={services}
@@ -124,8 +124,7 @@ const styling = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontWeight: "bold",
-    color: "#4DAF8C",
+    color: "black",
     marginBottom: 20,
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
@@ -133,7 +132,7 @@ const styling = StyleSheet.create({
 
   },
   servicesContainer: {
-    paddingBottom: 30,
+    paddingBottom: 20,
   },
   card: {
     backgroundColor: "#fff",
@@ -147,7 +146,7 @@ const styling = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-    padding: 20,
+    padding: 10,
     marginBottom: 20,
   },
   cardTitle: {
@@ -161,14 +160,17 @@ const styling = StyleSheet.create({
     color: "#555",
   },
   applicantName: {
-    color: "#555",
     marginLeft: 10,
     marginTop: 5,
-    borderColor:"black",
-    borderWidth:1,
-    borderRadius:5,
-    padding:5
-  },
+    backgroundColor: "#4DAF8C",
+    borderRadius: 5,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#4DAF8C",
+
+
+ }
+  
   
 });
 

@@ -18,11 +18,36 @@ const getUserNotifications = async (req, res) => {
 
     if (userType === 'job_seeker') {
       query = `
-      SELECT applications.application_id,services.service_id, services.employer_id, users.full_name AS employer_name, services.title, applications.application_status, applications.created_at, users.profile_pic
-      FROM applications
-      JOIN services ON applications.service_id = services.service_id
-      JOIN users ON services.employer_id = users.user_id
-      WHERE applications.job_seeker_id = ? AND users.user_type = 'employer' AND applications.application_status IN ('accepted','rejected')
+      SELECT 
+      applications.application_id,
+      services.service_id, 
+      services.employer_id, 
+      users.full_name AS employer_name, 
+      services.title, 
+      applications.application_status, 
+      applications.created_at, 
+      users.profile_pic
+  FROM 
+      applications
+  JOIN 
+      services ON applications.service_id = services.service_id
+  JOIN 
+      users ON services.employer_id = users.user_id
+  WHERE 
+      applications.job_seeker_id = ? 
+      AND users.user_type = 'employer' 
+      AND applications.application_status IN ('accepted', 'rejected') 
+      AND NOT EXISTS (
+          SELECT 
+              1 
+          FROM 
+              ratings 
+          WHERE 
+              ratings.service_id = applications.service_id 
+              AND ratings.employer_id IS NOT NULL 
+              AND ratings.job_seeker_id IS NOT NULL
+      );
+  
       
       `;
       params = [userId];
@@ -32,7 +57,17 @@ const getUserNotifications = async (req, res) => {
         FROM applications
         JOIN services ON applications.service_id = services.service_id
         JOIN users ON applications.job_seeker_id = users.user_id
-        WHERE services.employer_id = ? AND users.user_type = 'job_seeker' AND applications.application_status IN ('accepted','pending')
+        WHERE services.employer_id = ? AND users.user_type = 'job_seeker' AND applications.application_status IN ('accepted','pending') AND NOT EXISTS (
+          SELECT 
+              1 
+          FROM 
+              ratings 
+          WHERE 
+              ratings.service_id = applications.service_id 
+              AND ratings.employer_id IS NOT NULL 
+              AND ratings.job_seeker_id IS NOT NULL
+      );
+  
       `;
       params = [userId];
     } else {

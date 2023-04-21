@@ -75,7 +75,7 @@ const FeedbackScreen = ({ route, navigation }) => {
 
                         if (response.status === 200 || response.status === 201) {
                             console.log(response.data.message);
-                            navigation.goBack();
+                            navigation.navigate("Notifications");
                         }
                     } catch (error) {
                         console.log(error);
