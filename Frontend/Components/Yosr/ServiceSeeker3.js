@@ -73,11 +73,11 @@ export default function ServiceSeeker3({ navigation }) {
 
 
         <StatusBar style="auto" />
-        <Text style={styles.text} >full_name:</Text>
+        <Text style={styles.text} >Full Name:</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="Input full_name "
+            placeholder="Input full name "
             placeholderTextColor="#003f5c"
             onChangeText={(full_name) => setFull_name(full_name)}
           />
@@ -91,7 +91,7 @@ export default function ServiceSeeker3({ navigation }) {
             onChangeText={(email) => setEmail(email)}
           />
         </View>
-        <Text style={styles.text} >address:</Text>
+        <Text style={styles.text} >Address:</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -100,7 +100,7 @@ export default function ServiceSeeker3({ navigation }) {
             onChangeText={(address) => setaddress(address)}
           />
         </View>
-        <Text style={styles.text} >interests:</Text>
+        <Text style={styles.text} >Interests:</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -109,7 +109,7 @@ export default function ServiceSeeker3({ navigation }) {
             onChangeText={(interests) => setinterests(interests)}
           />
         </View>
-        <Text style={styles.text} >Phone_Number:</Text>
+        <Text style={styles.text} >Phone Number:</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -150,104 +150,86 @@ export default function ServiceSeeker3({ navigation }) {
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 10,
   },
   inputcontainer: {
-    alignItems: "center"
+    alignItems: 'center',
   },
   image: {
-    marginBottom: 100,
-    position: "absolute",
-    width: 110,
-    height: 110,
-
-
-    top: 50,
-    bottom: 100
-    ,
-
-
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+  },
+  text: {
+    color: '#18C0C1',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 10,
+    alignSelf: 'flex-start',
+  },
+  text1: {
+    color: '#18C0C1',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 20,
+    alignSelf: 'flex-start',
   },
   inputView: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 30,
-    borderColor: "#18C0C1",
-    borderWidth: 1,
-
-    width: "70%",
-    height: 45,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    width: '100%',
+    height:60,
     marginBottom: 20,
-    alignItems: "center",
-    marginTop: 10,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  inputView1: {
+    backgroundColor: '#F2F2F2',
+    borderRadius: 30,
+    width: '100%',
+    height: 100,
+    marginBottom: 20,
+    justifyContent: 'flex-start',
+    padding: 20,
   },
   TextInput: {
     height: 50,
     flex: 1,
-    padding: 10,
-    marginLeft: 20,
-
-  },
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
+    fontSize: 16,
   },
   SaveBtn: {
     width: 180,
-    borderRadius: 12,
-    height: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 40,
-    backgroundColor: "#18C0C1",
+    height: 50,
+    backgroundColor: '#18C0C1',
+    borderRadius: 30,
+    justifyContent: 'center',
+marginBottom:15,
   },
   UploadCVBtn: {
     width: 180,
-    borderRadius: 12,
-    height: 35,
-    justifyContent: "center",
-    backgroundColor: "#18C0C1",
-    display: "flex",
-    alignItems: "center",
-    padding: 10,
-    gap: 10,
-    marginBottom: 40,
-    marginTop: 8,
-
-    right: 40,
-
+    height: 50, /* Changed height to 50 */
+    backgroundColor: '#18C0C1',
+    borderRadius: 30,
+    justifyContent: 'center',
+    marginTop: 30, /* Changed marginTop to 30 */
+    marginBottom: 10, /* Changed marginBottom to 10 */
+  }
+,  
+  loginText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   loginText1: {
-    color: '#FFFFFF',
-    fontSize: 11,
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  loginText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-  },
-  text: {
-    right: 90,
-  },
-  text1: {
-    right: 110,
-  },
-  inputView1: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 30,
-    borderColor: "#18C0C1",
-    borderWidth: 1,
-    width: "70%",
-    height: 130,
-    marginBottom: 20,
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-
-
-
 });
