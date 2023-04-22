@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
-
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -27,6 +27,7 @@ export default function ServiceSeeker3({ navigation }) {
   const [interests, setinterests] = useState("");
   const [description, setDescription] = useState("")
   const [userType,setUserType]=useState(null)
+  const [imageUri, setImageUri] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,10 +41,35 @@ export default function ServiceSeeker3({ navigation }) {
   }, []);
   
   
+const handlePick= async () => {
+  let result = await ImagePicker.launchImageLibraryAsync();
+  if (!result.canceled) {
+    let base64 = await convertToBase64(result.assets[0].uri);
+    console.log(base64)
+    setImageUri(base64);
+  }
+};
+
+const convertToBase64 = async (uri) => {
+  let response = await fetch(uri);
+  let blob = await response.blob();
+  let base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+  });
+  return base64;
+};
 
   const handleApplication = async (e) => {
     e.preventDefault();
     try {
+      const token = await AsyncStorage.getItem("authToken");
 
       await axios.post("http://192.168.1.25:3001/api/updateUserProfile", {
         full_name: full_name,
@@ -51,7 +77,9 @@ export default function ServiceSeeker3({ navigation }) {
         phone_number: phone_number,
         address: address,
         interests: interests,
-        description: description
+        description: description,
+        profile_pic: imageUri
+      
 
       }, {
         headers: {
@@ -69,8 +97,10 @@ export default function ServiceSeeker3({ navigation }) {
     <ScrollView style={styles.container}>
       <View style={styles.inputcontainer}>
 
-        <Image style={styles.image} source={require("../Yosr/imag.png")} />
-
+         {imageUri && <Image style={styles.image} source={{ uri: imageUri }} />}
+        <TouchableOpacity style={styles.SaveBtn} onPress={handlePick}>
+            <Text style={styles.loginText}>Upload picture</Text>
+          </TouchableOpacity>
 
         <StatusBar style="auto" />
         <Text style={styles.text} >Full Name:</Text>
@@ -161,8 +191,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     marginBottom: 20,
   },
   text: {
