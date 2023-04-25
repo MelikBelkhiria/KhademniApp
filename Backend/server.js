@@ -34,6 +34,8 @@ app.use((req, res, next) => {
 
 // Middleware
 app.use(cors());
+app.use(bodyParser.json({ limit: '100mb' }));
+
 app.use(bodyParser.json());
 app.use(
   session({

@@ -20,7 +20,7 @@ exports.getUserInfo = (req, res) => {
           phone_number: results[0].phone_number,
           address: results[0].address,
           interests: results[0].interests,
-          profile_pic: `data:image/png;base64,${results[0].profile_pic_base64}`,
+          profile_pic: `data:image/jpg;base64,${results[0].profile_pic_base64}`,
           created_at: results[0].created_at,
           description: results[0].description
         };

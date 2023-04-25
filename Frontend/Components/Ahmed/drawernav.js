@@ -9,6 +9,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { Pressable } from 'react-native';
 import Home from './LoginandHomeScreeen/homescreen';
@@ -18,7 +19,7 @@ import JobSearchPage from '../Nour/Search';
 import Help from './help';
 import JobCard from './savedpost';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useCallback } from 'react';
 import { Buffer } from 'buffer';
 import base64js from 'base64-js';
 function base64Encode(data, type = "") {
@@ -29,13 +30,15 @@ function base64Encode(data, type = "") {
 
 const Drawer = createDrawerNavigator();
 export default function DrawNavi({ navigation, }) {
-  const [userInfo, setUserInfo] = useState()
-  const [imageURI, setImageUri] = useState(null)
-  useEffect(() => {
+
+
+  const CustomDrawer = (props) => {
+    const [userInfo, setUserInfo] = useState()
+
     const api = axios.create({
       baseURL: 'http://192.168.1.25:3001'
     });
-
+  
     async function fetchuserInfo() {
       const token = await AsyncStorage.getItem('authToken');
       api.get('/userInfo', {
@@ -50,19 +53,18 @@ export default function DrawNavi({ navigation, }) {
         })
         .catch((error) => {
         });
-
+  
     }
+  
+    useFocusEffect(
+      useCallback(() => {
+        fetchuserInfo();
+      }, [])
+    );
+  
+  
+  
 
-
-    fetchuserInfo();
-  }, []);
-
-  useEffect(() => {
-    console.log("the image is ", imageURI)
-  }, [imageURI])
-
-
-  const CustomDrawer = (props) => {
     const handleLogOut = async () => {
       try {
         // Clear the JWT token from AsyncStorage
@@ -81,7 +83,7 @@ export default function DrawNavi({ navigation, }) {
     return (
       <View style={{ flex: 1 }}>
 
-        <View style={{ flex: 0.47, backgroundColor: '#38c0c0', marginBottom: 10, borderBottomLeftRadius: 22, borderBottomRightRadius: 22,justifyContent:"center",alignItems:"center" }}>
+        <View style={{ flex: 0.47, backgroundColor: '#38c0c0', marginBottom: 10, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, justifyContent: "center", alignItems: "center" }}>
           {userInfo && <Image style={{ width: 150, height: 150 }} source={{ uri: userInfo.profile_pic }} />}
 
 

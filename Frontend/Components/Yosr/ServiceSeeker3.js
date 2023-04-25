@@ -41,15 +41,28 @@ export default function ServiceSeeker3({ navigation }) {
   }, []);
   
   
-const handlePick= async () => {
-  let result = await ImagePicker.launchImageLibraryAsync();
-  if (!result.canceled) {
-    let base64 = await convertToBase64(result.assets[0].uri);
-    console.log(base64)
-    setImageUri(base64);
-  }
-};
-
+  const handlePick = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      base64: true,
+      assetType: 'Photos'
+    });
+    
+    if (!result.canceled) {
+      const asset = result.assets[0];
+      const type = asset.uri.substring(asset.uri.lastIndexOf('.') + 1).toLowerCase();
+      if (type === 'jpg' || type === 'jpeg') {
+        let base64 = await convertToBase64(asset.uri);
+        console.log(base64);
+        setImageUri(base64);
+      } else {
+        alert('Please select a JPG image.');
+      }
+    }
+  };
+  
 const convertToBase64 = async (uri) => {
   let response = await fetch(uri);
   let blob = await response.blob();
@@ -99,7 +112,7 @@ const convertToBase64 = async (uri) => {
 
          {imageUri && <Image style={styles.image} source={{ uri: imageUri }} />}
         <TouchableOpacity style={styles.SaveBtn} onPress={handlePick}>
-            <Text style={styles.loginText}>Upload picture</Text>
+            <Text style={styles.loginText}>Upload JPG picture</Text>
           </TouchableOpacity>
 
         <StatusBar style="auto" />
