@@ -42,7 +42,7 @@ export default function ConfirmCard(props) {
         <View style={{ flexDirection: 'row' }}>
 
           <View style={{ marginRight: 15 }}>
-            <Image source={{ uri: props.uri }} style={styles.pdp} />
+            <Image source={{ uri: `data:image/jpg;base64,${props.uri}`}} style={styles.pdp} />
             <Rating numberOfStars={props.rating} />
           </View>
 

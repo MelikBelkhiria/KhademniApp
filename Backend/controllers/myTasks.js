@@ -29,21 +29,21 @@ exports.displayTasks = (req, res) => {
   const decodedToken = jwt.decode(token);
   const userId = decodedToken.id;
 
-  const q = `SELECT s.*, 
-  (SELECT 
-    CASE 
-       WHEN SUM(CASE WHEN application_status = 'accepted' THEN 1 ELSE 0 END) > 0 THEN 'recruited'
-       ELSE 'pending'
-    END AS service_status
-    FROM 
-       applications
-    WHERE 
-       service_id = s.service_id
- ) AS service_status
- 
-             FROM services s 
-             WHERE s.employer_id = ?`;
-
+  const q = `
+  SELECT s.*, TO_BASE64(u.profile_pic) AS profile_pic_base64,
+    (SELECT 
+      CASE 
+        WHEN SUM(CASE WHEN application_status = 'accepted' THEN 1 ELSE 0 END) > 0 THEN 'recruited'
+        ELSE 'pending'
+      END AS service_status
+      FROM 
+        applications
+      WHERE 
+        service_id = s.service_id
+    ) AS service_status
+  FROM services s 
+  JOIN users u ON s.employer_id = u.user_id
+  WHERE s.employer_id = ?`;
   db.query(q, [userId], (err, results) => {
     if (err) {
       console.error('Error querying database: ', err);

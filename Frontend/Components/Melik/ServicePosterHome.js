@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default function ServicePosterHome({ navigation }) {
   const [myServices, setMyServices] = useState([]);
+  const [pic, setPic]=useState()
 
   const fetchData = async () => {
     try {
@@ -23,7 +24,10 @@ export default function ServicePosterHome({ navigation }) {
         }
       });
       setMyServices(response.data);
-      console.log("the response",response.data)
+      const employerProfilePic = response.data[0].profile_pic_base64;
+      setPic(employerProfilePic)
+      console.log("this",employerProfilePic)
+
     } catch (error) {
       console.error(error);
     }
@@ -42,12 +46,12 @@ export default function ServicePosterHome({ navigation }) {
       <View style={Melik.row}>
         <Text style={Melik.text}>Bienvenue!</Text>
         <Pressable onPress={() => navigation.navigate('profileposterforposter')}>
-          <Image
+          {pic && <Image
             source={{
-              uri: 'https://cdn2.f-cdn.com/files/download/38545966/4bce6b.jpg',
+              uri: `data:image/jpg;base64,${pic}`,
             }}
             style={Melik.image}
-          />
+          />}
         </Pressable>
       </View>
       <ScrollView>
@@ -65,7 +69,7 @@ export default function ServicePosterHome({ navigation }) {
                 Title: service.title,
                 Statut: service.service_status,
                 Date: service.start_time,
-                uri: 'https://cdn2.f-cdn.com/files/download/38545966/4bce6b.jpg',
+                uri: service.profile_pic_base64,
                 onConfirm: () => onConfirm(service.service_id),
                 Service_id: service.service_id
               });
@@ -90,7 +94,7 @@ const Melik = StyleSheet.create({
   row: {
     width: "80%",
     flexDirection: 'row',
-    alignItems: 'space-between'
+    alignItems: 'center',
   },
   text: {
     fontSize: 22,
@@ -99,8 +103,8 @@ const Melik = StyleSheet.create({
     marginRight: 10
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     borderRadius: 50
   },
   addButton: {

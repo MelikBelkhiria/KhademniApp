@@ -4,26 +4,21 @@ import { Feather } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import axios from 'axios'
 
-const jobs = [
-    { id: '1', name: 'Cuisinier', employer: 'Hippo', numberofstars: '4', price: 80, location: 'Bizert', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
-    { id: '2', name: 'Jardinier', employer: 'Foulen Fouleni', numberofstars: '5', price: 65, location: 'Lac2', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
-    { id: '3', name: 'Femme/Homme de menage', employer: 'Rand Om', numberofstars: '3', price: 85, location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
-    { id: '4', name: 'UX Designer', employer: 'Orange', price: 350, numberofstars: '4', location: 'Marsa', image: require('../Ahmed/IMG_1368-Modifica_pp-1.jpg') },
-];
 
-const JobCard = ({ job,navigation }) => {
+
+const JobCard = ({ job, navigation }) => {
 
     const [saved, setsaved] = useState(false)
 
     const savejob = () => {
         setsaved(!saved)
     };
- 
+
     return (
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("Application", { 
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("Application", {
             title: job.title,
             price: job.price,
-            imageURI: job.profile_pic,
+            imageURI: `data:image/jpg;base64,${job.profile_pic_base64}`,
             numberOfStars: job.numberOfStars,
             description: job.description,
             created_at: job.created_at,
@@ -31,29 +26,29 @@ const JobCard = ({ job,navigation }) => {
             location: job.location,
             field: job.domain,
             serviceId: job.service_id
-          })}>
-          <View>
-            <Image source={{uri:job.imageURI}} style={styles.image} />
-            <View style={styles.starscontainer}>
-              <Ionicons style={styles.star} size={17} name="star"></Ionicons>
-              <Text  style={styles.nbrstars} > {job.numberOfStars} </Text>
+        })}>
+            <View>
+                <Image resizeMode='cover' source={{ uri: `data:image/jpg;base64,${job.profile_pic_base64}`}} style={styles.image} />
+                <View style={styles.starscontainer}>
+                    <Ionicons style={styles.star} size={17} name="star"></Ionicons>
+                    <Text style={styles.nbrstars} > {job.numberOfStars} </Text>
+                </View>
             </View>
-          </View>
-          <View style={styles.jobInfo}>
-            <Text style={styles.name}>{job.title}</Text>
-            <Text style={styles.price}>{job.price}€</Text>
-            <Text style={styles.employer}>{job.full_name}</Text>
-            <Text style={styles.location}>{job.location}</Text>
-          </View>
-          <TouchableOpacity onPress={savejob} >
-            {saved ? <Ionicons style={styles.save} name="bookmark" size={28}></Ionicons> : <Ionicons style={styles.save} name="bookmark-outline" size={28}></Ionicons> }
-          </TouchableOpacity>
+            <View style={styles.jobInfo}>
+                <Text style={styles.name}>{job.title}</Text>
+                <Text style={styles.price}>{job.price}€</Text>
+                <Text style={styles.employer}>{job.full_name}</Text>
+                <Text style={styles.location}>{job.location}</Text>
+            </View>
+            <TouchableOpacity onPress={savejob} >
+                {saved ? <Ionicons style={styles.save} name="bookmark" size={28}></Ionicons> : <Ionicons style={styles.save} name="bookmark-outline" size={28}></Ionicons>}
+            </TouchableOpacity>
         </TouchableOpacity>
-        
+
     );
 };
 
-const JobSearchPage = ({navigation}) => {
+const JobSearchPage = ({ navigation }) => {
     const [jobss, setJobs] = useState([""]);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [sortOrder, setSortOrder] = useState('asc');
@@ -70,21 +65,23 @@ const JobSearchPage = ({navigation}) => {
     const locations = [
         { label: 'Lac2', value: 'L2' },
         { label: 'Marsa', value: 'M' },
-        { label: 'Bizert', value: 'B'},
-        { label: 'Tunis', value: 'T'},
+        { label: 'Bizert', value: 'B' },
+        { label: 'Tunis', value: 'T' },
         { label: 'Sousse', value: 'S' },
     ];
 
     useEffect(() => {
         axios.get('http://192.168.1.25:3001/SearchTasks')
-          .then(response => {setJobs(response.data);
-          setFilteredJobs(response.data)})
-          .catch(error => console.error(error));
-         
-      }, []);
+            .then(response => {
+                setJobs(response.data);
+                setFilteredJobs(response.data)
+            })
+            .catch(error => console.error(error));
+
+    }, []);
 
 
-      console.log(jobss);
+
 
 
     const handleBothOptions = (option) => {
@@ -134,13 +131,13 @@ const JobSearchPage = ({navigation}) => {
         );
     };
 
-   const handleSearch = (query) => {
-    setSearchQuery(query);
-    setFilteredJobs(jobss.filter(job =>
-        job.title.toLowerCase().includes(query.toLowerCase()) ||
-        job.description.toLowerCase().includes(query.toLowerCase())
-    ));
-};
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setFilteredJobs(jobss.filter(job =>
+            job.title.toLowerCase().includes(query.toLowerCase()) ||
+            job.description.toLowerCase().includes(query.toLowerCase())
+        ));
+    };
 
 
 
@@ -158,7 +155,7 @@ const JobSearchPage = ({navigation}) => {
                     onChangeText={handleSearch}
                 />
 
-               
+
             </View>
             <View style={styles.a}>
                 <View>
@@ -206,9 +203,9 @@ const JobSearchPage = ({navigation}) => {
             <FlatList
                 data={filteredJobs}
                 keyExtractor={job => job.id}
-                renderItem={({ item }) => <JobCard job={item} navigation={navigation}/>}
+                renderItem={({ item }) => <JobCard job={item} navigation={navigation} />}
                 contentContainerStyle={styles.list}
-                
+
             />
         </View>
 
@@ -230,20 +227,20 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 1,
         height: 45,
-        backgroundColor:'#e7f6f5'
-        ,marginTop:50
+        backgroundColor: '#e7f6f5'
+        , marginTop: 50
     },
     container: {
         flex: 1,
         backgroundColor: '#FFF',
     },
-    starscontainer:{
-        flexDirection:"row"
+    starscontainer: {
+        flexDirection: "row"
     },
-    nbrstars:{
-        marginTop:3,
-        marginLeft:3,
-        fontSize:16
+    nbrstars: {
+        marginTop: 3,
+        marginLeft: 3,
+        fontSize: 16
     },
     list: {
         padding: 20,
@@ -310,7 +307,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#18C0C1',
         alignItems: 'center',
         justifyContent: 'space-between',
- 
+
         marginLeft: 20,
         padding: 18,
         width: 150,
@@ -326,7 +323,7 @@ const styles = StyleSheet.create({
     },
     cc: {
         flexDirection: 'row',
-      
+
         padding: 18,
         width: 150,
         alignItems: 'center',

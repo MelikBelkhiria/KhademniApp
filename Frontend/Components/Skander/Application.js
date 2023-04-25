@@ -3,11 +3,15 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'reac
 import Rating from "../../Utlity/Stars"
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
+const Application = ({ navigation, route }) => {
+  const formatDate = (dateString) => {
+    return moment(dateString).format('MMMM Do YYYY');
+  };
+  
 
-const Application = ({navigation, route}) => {
-
-const { title, price, imageURI, numberOfStars, description, created_at, employer, location, field, serviceId } = route.params;
+  const { title, price, imageURI, numberOfStars, description, created_at, employer, location, field, serviceId } = route.params;
 
 
   const [showMore, setShowMore] = useState(false);
@@ -19,23 +23,23 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
       const token = await AsyncStorage.getItem('authToken'); // assuming you are storing the token using AsyncStorage
       await axios.post("http://192.168.1.25:3001/ApplyForTask/" + serviceId, {}, {
         headers: {
-          Authorization: 'Bearer '+ token
+          Authorization: 'Bearer ' + token
         },
         withCredentials: true
       });
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
-  
-  
+
+
 
 
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.25, justifyContent: "space-around", flexDirection: "row", backgroundColor: "white", alignItems: "center", marginTop: 20 }}>
         <View style={{ flexDirection: "column" }}>
-          <Image style={{ marginBottom: 5, borderRadius: 50, width: 90, height: 90 }} source={{ uri:imageURI }}></Image>
+          <Image style={{ marginBottom: 5, borderRadius: 50, width: 90, height: 90 }} source={{ uri: imageURI }}></Image>
           <Rating numberOfStars={numberOfStars}></Rating>
         </View>
         <View style={{ flexDirection: "column" }}>
@@ -45,12 +49,12 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
         </View>
       </View>
       <View style={{ height: 10 }}></View>
-      <View style={{ flex: 0.22, backgroundColor: "white", flexDirection: "column", flexWrap: "wrap", padding: 20 }}>
-        <View style={{ marginBottom: 30, marginRight: 50 }}>
+      <View style={{ flex: 0.25, backgroundColor: "white", flexDirection: "row",flexWrap:"wrap", padding: 20,justifyContent:"space-between" }}>
+        <View style={{ marginBottom: 30 }}>
           <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Posté le</Text>
-          <Text>{created_at}</Text>
+          <Text>{formatDate(created_at)}</Text>
         </View>
-        <View style={{ marginRight: 50 }}>
+        <View>
           <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Prix</Text>
           <Text>{price}TND</Text>
         </View>
@@ -67,7 +71,7 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
       <View style={{ height: 10 }}></View>
       <View style={{ flex: 0.3, backgroundColor: "white", padding: 20 }}>
         <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 10 }}>DESCRIPTION DU SERVICE</Text>
-        {showMore ? ( 
+        {showMore ? (
           <>
             <ScrollView>
               <Text style={{ fontSize: 16, lineHeight: 24 }}>
@@ -78,7 +82,7 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
               <Text style={{ color: "blue", marginTop: 10, fontWeight: "bold" }}>Voir moins ↑</Text>
             </TouchableOpacity>
           </>
-        ) : ( 
+        ) : (
           <>
             <Text style={{ fontSize: 16, lineHeight: 24 }}>
               {description}
@@ -89,12 +93,13 @@ const { title, price, imageURI, numberOfStars, description, created_at, employer
           </>
         )}
       </View>
-      <View style={{flex:0.2,justifyContent:"center",alignItems:"center"}}>
-      <Pressable onPress={(e)=>{
-        handleApplication(e);
-        navigation.navigate("Search")}}>
-        <Text style={{backgroundColor:"#18C0C1",width:170,height:"60%",textAlign:"center",textAlignVertical:"center",fontWeight:"bold",color:"white",borderRadius:10,marginTop:20}}>Poser candidature</Text>
-      </Pressable>
+      <View style={{ flex: 0.2, justifyContent: "center", alignItems: "center" }}>
+        <Pressable onPress={(e) => {
+          handleApplication(e);
+          navigation.navigate("Search")
+        }}>
+          <Text style={{ backgroundColor: "#18C0C1", width: 170, height: "60%", textAlign: "center", textAlignVertical: "center", fontWeight: "bold", color: "white", borderRadius: 10, marginTop: 20 }}>Poser candidature</Text>
+        </Pressable>
       </View>
 
 
