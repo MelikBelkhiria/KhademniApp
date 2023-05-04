@@ -5,24 +5,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
 
-const Item = ({ pic, title, message, date, type, navigation, service_id }) => {
+const Item = ({  title, message, date, type, navigation, service_id }) => {
   const handleNavigate = () => {
     if (type === "rating") {
-      console.log(service_id)
       navigation.navigate("Rating", { service_id: service_id });
     }
   };
 
   return (
-    <TouchableOpacity style={{ flex: 0.18, backgroundColor: "white", padding: 15, justifyContent: "space-between" }} onPress={handleNavigate}>
+    <TouchableOpacity style={{ flex: 0.18, backgroundColor: "white", padding: 15, justifyContent: "space-between",borderBottomWidth:0.2,borderColor:"grey" }} onPress={handleNavigate}>
       <View style={{ flex: 0.5, marginTop: 5, justifyContent: "space-between", flexDirection: "row" }}>
         <View style={{ flexDirection: "row", display: "flex", alignItems: "center", flex: 0.8 }}>
-          <Image style={{ borderRadius: 25, width: 50, height: 50 }} source={{ uri: pic }}></Image>
-          <Text style={{ textAlignVertical: "center", marginLeft: 10, fontSize: 15, fontWeight: "bold" }}>{title}</Text>
+          <Text style={{ textAlignVertical: "center", marginLeft: 5, fontSize: 15, fontWeight: "bold" ,margin:10}}>{title}</Text>
         </View>
         <View style={{ width: 15, height: 15, backgroundColor: "green", borderRadius: 25 }}></View>
       </View>
-      <Text>{message}</Text>
+      <Text style={{marginBottom:5}}>{message}</Text>
       <Text style={{ color: "#5FC6B7" }}>{date}</Text>
 
 
@@ -36,7 +34,7 @@ const Notifications = ({ navigation }) => {
   const [urgentSelected, setUrgentSelected] = useState(false);
 
   const api = axios.create({
-    baseURL: 'http://192.168.1.25:3001',
+    baseURL: 'http://192.168.1.45:3001',
   });
 
   async function fetchData() {
@@ -50,11 +48,9 @@ const Notifications = ({ navigation }) => {
 
         .then((response) => response.data)
         .then((data) => {
-          console.log(data);
           const formattedData = data.map((notification) => {
             return {
               id: notification.id,
-              pic: notification.pic,
               title: notification.title,
               message: notification.message,
               type: notification.type,
@@ -62,7 +58,6 @@ const Notifications = ({ navigation }) => {
               service_id: notification.service_id
             };
           });
-          console.log(formattedData);
 
           setNotifications(formattedData);
           setFilteredNotifications(formattedData);
@@ -100,7 +95,6 @@ const Notifications = ({ navigation }) => {
   };
   const renderItem = ({ item }) => (
     <Item
-      pic={item.pic}
       title={item.title}
       message={item.message}
       date={item.date}

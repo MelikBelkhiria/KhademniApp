@@ -54,7 +54,7 @@ const currentDate = selectedDate || date ;
     try {
       const token = await AsyncStorage.getItem('authToken');
 
-      await axios.post("http://192.168.1.25:3001/api/postService", {
+      await axios.post("http://192.168.1.45:3001/api/postService", {
         title: title,
         location: location,
         price: Price,

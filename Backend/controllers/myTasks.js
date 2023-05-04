@@ -8,10 +8,10 @@ exports.displayApplicants = (req, res) => {
 
   const serviceId = req.params.serviceId;
 
-  const q = `SELECT *
+  const q = `SELECT *, TO_BASE64(profile_pic) AS profile_pic_base64
   FROM khademnifinal.applications a
   JOIN khademnifinal.users u ON u.user_id = a.job_seeker_id
-  WHERE a.service_id = 2 AND a.application_status != 'rejected'
+  WHERE a.service_id = ? AND a.application_status != 'rejected'
   `;
 
   db.query(q, [serviceId], (err, results) => {

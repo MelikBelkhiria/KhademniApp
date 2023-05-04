@@ -23,15 +23,11 @@ export default function Confirmation({ route, navigation }) {
     setCandidates(candidates.filter((candidate) => candidate.application_id !== id));
   };
   
-  const [candidates, setCandidates] = useState([
-    { id: 0, fullName: 'Maria Ben Moulehem', location: 'Tunis', date: '14/02/2023', uri: 'https://th.bing.com/th/id/OIP.VNkoI19GPy5Cm9MTlFHO8wAAAA?pid=ImgDet&rs=1', rating: 4 },
-    { id: 1, fullName: 'Salima Ben Yedder', location: 'Sousse', date: '10/02/2023', uri: 'https://th.bing.com/th/id/OIP.9sj4_jr5ogcNLp41F4n7OwHaLH?pid=ImgDet&rs=1', rating: 3 },
-  ]);
+  const [candidates, setCandidates] = useState([]);
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.25:3001/applicants/${Service_id}`); // replace 123 with the service ID
-        console.log(response.data)
+        const response = await axios.get(`http://192.168.1.45:3001/applicants/${Service_id}`); // replace 123 with the service ID
         setCandidates(response.data);
       } catch (error) {
         console.error(error);
@@ -58,7 +54,6 @@ export default function Confirmation({ route, navigation }) {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{Title}</Text>
         </View>
-        {uri && <Image style={styles.image} source={{ uri }} />}
       </View>
 
       <View style={styles.filterContainer}>
@@ -89,12 +84,12 @@ export default function Confirmation({ route, navigation }) {
 
       {sortCandidates(sortOption, sortOrder).map((service) => (
         <ConfirmCard
-          key={service.user_id}
+          key={service.application_id}
           name={service.full_name}
           Location={service.address}
           Date={formatDate(service.created_at)}
           rating={service.rating}
-          uri={service.uri}
+          uri={service.profile_pic_base64}
           id={service.application_id}
           navigation={navigation}
           onRemove={() => removeCandidateById(service.application_id)}

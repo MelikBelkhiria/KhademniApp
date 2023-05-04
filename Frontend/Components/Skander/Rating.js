@@ -63,7 +63,7 @@ const FeedbackScreen = ({ route, navigation }) => {
                         console.log(service_id)
                         const token = await AsyncStorage.getItem('authToken');
 
-                        const response = await axios.post("http://192.168.1.25:3001/api/submit-rating", {
+                        const response = await axios.post("http://192.168.1.45:3001/api/submit-rating", {
                             rating,
                             feedback,
                             service_id,

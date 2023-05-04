@@ -21,7 +21,7 @@ const Application = ({ navigation, route }) => {
     e.preventDefault();
     try {
       const token = await AsyncStorage.getItem('authToken'); // assuming you are storing the token using AsyncStorage
-      await axios.post("http://192.168.1.25:3001/ApplyForTask/" + serviceId, {}, {
+      await axios.post("http://192.168.1.45:3001/ApplyForTask/" + serviceId, {}, {
         headers: {
           Authorization: 'Bearer ' + token
         },

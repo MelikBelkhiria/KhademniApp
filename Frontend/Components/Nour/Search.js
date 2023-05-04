@@ -71,7 +71,7 @@ const JobSearchPage = ({ navigation }) => {
     ];
 
     useEffect(() => {
-        axios.get('http://192.168.1.25:3001/SearchTasks')
+        axios.get('http://192.168.1.45:3001/SearchTasks')
             .then(response => {
                 setJobs(response.data);
                 setFilteredJobs(response.data)

@@ -18,7 +18,7 @@ export default function ServicePosterHome({ navigation }) {
   const fetchData = async () => {
     try {
       const token = await AsyncStorage.getItem('authToken');
-      const response = await axios.get('http://192.168.1.25:3001/myTasks', {
+      const response = await axios.get('http://192.168.1.45:3001/myTasks', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -26,8 +26,6 @@ export default function ServicePosterHome({ navigation }) {
       setMyServices(response.data);
       const employerProfilePic = response.data[0].profile_pic_base64;
       setPic(employerProfilePic)
-      console.log("this",employerProfilePic)
-
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +67,6 @@ export default function ServicePosterHome({ navigation }) {
                 Title: service.title,
                 Statut: service.service_status,
                 Date: service.start_time,
-                uri: service.profile_pic_base64,
                 onConfirm: () => onConfirm(service.service_id),
                 Service_id: service.service_id
               });

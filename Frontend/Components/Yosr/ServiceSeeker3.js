@@ -84,7 +84,7 @@ const convertToBase64 = async (uri) => {
     try {
       const token = await AsyncStorage.getItem("authToken");
 
-      await axios.post("http://192.168.1.25:3001/api/updateUserProfile", {
+      await axios.post("http://192.168.1.45:3001/api/updateUserProfile", {
         full_name: full_name,
         email: email,
         phone_number: phone_number,

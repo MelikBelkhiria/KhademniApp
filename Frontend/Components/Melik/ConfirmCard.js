@@ -7,10 +7,8 @@ import axios from 'axios';
 export default function ConfirmCard(props) {
 
   const handleConfirm = (id) => {
-    console.log(id)
-    axios.post(`http://192.168.1.25:3001/confirm/${id}`)
+    axios.post(`http://192.168.1.45:3001/confirm/${id}`)
       .then(response => {
-        console.log(response.data);
         props.navigation.navigate("ServicePoster"); // replace "ConfirmationScreen" with the name of the screen you want to navigate to
       })
       .catch(error => {
@@ -20,10 +18,8 @@ export default function ConfirmCard(props) {
 
 
   const handleCancel = (id) => {
-    console.log(id)
-    axios.post(`http://192.168.1.25:3001/cancel/${id}`)
+    axios.post(`http://192.168.1.45:3001/cancel/${id}`)
       .then(response => {
-        console.log(response.data);
       })
       .catch(error => {
         console.error(error);

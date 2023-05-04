@@ -36,7 +36,7 @@ export default function DrawNavi({ navigation, }) {
     const [userInfo, setUserInfo] = useState()
 
     const api = axios.create({
-      baseURL: 'http://192.168.1.25:3001'
+      baseURL: 'http://192.168.1.45:3001'
     });
   
     async function fetchuserInfo() {
