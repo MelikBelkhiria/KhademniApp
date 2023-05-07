@@ -21,7 +21,7 @@ const Item = ({  title, message, date, type, navigation, service_id }) => {
         <View style={{ width: 15, height: 15, backgroundColor: "green", borderRadius: 25 }}></View>
       </View>
       <Text style={{marginBottom:5}}>{message}</Text>
-      <Text style={{ color: "#5FC6B7" }}>{date}</Text>
+      <Text style={{ color: "#18C0C1" }}>{date}</Text>
 
 
     </TouchableOpacity>
@@ -107,9 +107,8 @@ const Notifications = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.15, backgroundColor: "white", justifyContent: "center", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: "grey" }}>
-        <View style={{ backgroundColor: "#F2F3F8", width: "90%", height: "50%", display: "flex", flexDirection: "row", borderRadius: 10, justifyContent: "center", alignItems: "center", paddingLeft: 5 }}>
-          <Text style={{ backgroundColor: urgentSelected ? "#ACAEBE" : "white", width: "50%", height: "80%", textAlign: "center", textAlignVertical: "center", borderRadius: 10, color: urgentSelected ? "white" : "black", fontWeight: "bold" }} onPress={handleAllPress}>Tout</Text>
-          <Text style={{ backgroundColor: !urgentSelected ? "#ACAEBE" : "white", width: "50%", height: "80%", textAlign: "center", textAlignVertical: "center", borderRadius: 10, color: !urgentSelected ? "white" : "black", fontWeight: "bold" }} onPress={handleUrgentPress}>Urgent</Text>
+        <View style={{ backgroundColor: "white", width: "90%", height: "50%", display: "flex", flexDirection: "row", borderRadius: 10, justifyContent: "center", alignItems: "center", paddingLeft: 5 }}>
+          <Text style={{ backgroundColor: urgentSelected ? "#ACAEBE" : "white", width: "50%", height: "80%", textAlign: "center", textAlignVertical: "center", borderRadius: 10, color: urgentSelected ? "white" : "black", fontWeight: "bold" ,fontSize:30}} onPress={handleAllPress}>Notifications</Text>
 
         </View>
       </View>

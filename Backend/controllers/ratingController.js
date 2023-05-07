@@ -31,3 +31,33 @@ exports.submitRating = async (req, res) => {
         }
     });
 };
+
+exports.getRatings = async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1]; // Get the token from the request header
+    const decodedToken = jwt.verify(token, "your_jwt_secret");
+    const { userType, id } = decodedToken;
+
+    let ratingColumn, serviceNameColumn;
+
+    if (userType === "employer") {
+        ratingColumn = "star_rating_job_seeker as r";
+        serviceNameColumn = "services.title as service_name";
+    } else if (userType === "job_seeker") {
+        ratingColumn = "star_rating_employer as r";
+        serviceNameColumn = "services.title as service_name";
+    } else {
+        return res.status(401).json({ message: "Invalid user type." });
+    }
+
+    const query = `SELECT ratings.*, ${ratingColumn}, ${serviceNameColumn}
+                   FROM ratings
+                   INNER JOIN services ON ratings.service_id = services.service_id
+                   WHERE ratings.${userType}_id = ?
+                   ORDER BY ratings.created_at DESC`;
+
+    db.query(query, [id], (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.status(200).json(result);
+    });
+};

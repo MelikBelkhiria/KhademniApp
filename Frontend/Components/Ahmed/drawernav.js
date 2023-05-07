@@ -12,20 +12,12 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 
 import { Pressable } from 'react-native';
-import Home from './LoginandHomeScreeen/homescreen';
 import Profileofseekerforseeker from './profileofseekerforseeker';
 import Tabnav from './tabnav';
-import JobSearchPage from '../Nour/Search';
 import Help from './help';
 import JobCard from './savedpost';
 import axios from 'axios';
 import { useEffect, useState,useCallback } from 'react';
-import { Buffer } from 'buffer';
-import base64js from 'base64-js';
-function base64Encode(data, type = "") {
-  const base64 = Buffer.from(data, type).toString('base64');
-  return base64;
-}
 
 
 const Drawer = createDrawerNavigator();
@@ -48,7 +40,6 @@ export default function DrawNavi({ navigation, }) {
       })
         .then((response) => {
           response.data
-          console.log(response.data)
           setUserInfo(response.data)
         })
         .catch((error) => {
@@ -62,8 +53,12 @@ export default function DrawNavi({ navigation, }) {
       }, [])
     );
   
-  
-  
+    useEffect(() => {
+      if (userInfo){
+        console.log(JSON.stringify(userInfo).slice(0,100));
+      }
+    }, [userInfo]);
+    
 
     const handleLogOut = async () => {
       try {

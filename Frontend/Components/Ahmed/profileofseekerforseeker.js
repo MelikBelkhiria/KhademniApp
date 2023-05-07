@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { openBrowserAsync } from 'expo-web-browser';
+import 'react-native-gesture-handler';
+import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useFocusEffect } from '@react-navigation/native';
 
+import { Pressable } from 'react-native';
+
+import axios from 'axios';
+import { useEffect, useState,useCallback } from 'react';
+import Rating from '../../Utlity/Stars';
+import jwtDecode from 'jwt-decode';
 
 
 
@@ -20,15 +29,72 @@ export default function Profileofseekerforseeker({navigation}) {
         { name: 'service cuisson ', id: '7G', number: '4' },
         { name: 'cherche serveur', id: '8H', number: '3' },
     ];
+    const [userInfo, setUserInfo] = useState()
+    const [userType, setUserType] = useState(null);
+    const [userRatings,setUserRatings]= useState()
+  
 
+    const api = axios.create({
+      baseURL: 'http://192.168.1.45:3001'
+    });
+  
+    async function fetchuserInfo() {
+      const token = await AsyncStorage.getItem('authToken');
+      const decodedToken = jwtDecode(token);
+    setUserType(decodedToken.userType);
+      api.get('/userInfo', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+
+          response.data
+          setUserInfo(response.data)
+        })
+        .catch((error) => {
+        });
+  
+    }
+    async function fetchuserRatings() {
+        const token = await AsyncStorage.getItem('authToken');
+        const decodedToken = jwtDecode(token);
+        try {
+          const response = await axios.get('http://192.168.1.45:3001/api/get-rating', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const responseData = response.data; // Assign response data to a variable
+          setUserRatings(responseData); // Pass response data to setUserRatings
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      
+      
+      
+    useFocusEffect(
+      useCallback(() => {
+        fetchuserInfo()
+        fetchuserRatings()
+      }, [])
+    );
+  
+    useEffect(() => {
+      if (userRatings){
+        console.log(userRatings);
+
+      }
+    }, [userRatings]);
     const Item = ({ name, number }) => (
         <View style={styles.containerflatlist} >
             <Text style={styles.textrating}>{name}</Text>
-            <Ionicons style={styles.star} size={17} name="star-outline"> </Ionicons>
-            <Text style={styles.numberating} >{number}</Text>
+            <Ionicons style={styles.star} size={17} name="star">{number} </Ionicons>
+            
         </View>);
 
-    const renderItem = ({ item }) => <Item name={item.name} number={item.number} />;
+    const renderItem = ({ item }) => <Item name={item.service_name} number={item.r} />;
 
 const handleall =() =>{
     setfollow(!follow)
@@ -38,16 +104,14 @@ const handleall =() =>{
 
     return (
         <View style={styles.container}>
-   
             <View style={styles.headercontainer}>
                 <View style={styles.containerprofile}>
-                    <Image style={styles.imageprofile} resizeMode="contain" source={require("./257343671_446285320177426_6925597833109609576_n-e1640194834882.jpg")} />
+                   {userInfo && <Image style={styles.imageprofile} resizeMode="contain" source={{ uri: userInfo.profile_pic }} />}
                     <View>
-                        <Text style={styles.nomprofile}>Melik Belkhiria </Text>
+                        {userInfo && userInfo.full_name && <Text style={styles.nomprofile}>{userInfo.full_name} </Text>}
                         <View style={styles.reviewcontainer}>
                             <Text style={styles.textrating}>Note globale :</Text>
-                            <Ionicons style={styles.star} size={17} name="star"></Ionicons>
-                            <Text style={styles.numberating}> 4</Text>
+                            {userInfo && userInfo.user_average && <Rating numberOfStars={userInfo.user_average}></Rating>}
                         </View>
                         <TouchableOpacity style={styles.follow} onPress={() => navigation.navigate("ServiceSeeker3")}>
                             <View style={styles.containerfollow}>
@@ -67,25 +131,19 @@ const handleall =() =>{
                 <Text style={styles.titles}>
                     Description
                 </Text>
-                <Text style={styles.description}>
-                Bonjour, je m'appelle Pierre et je suis intéressé par le poste que vous proposez. Je suis un travailleur respectueux et j'apprécie 
-                la collaboration en équipe. j'ai été reconnu pour mon travail acharné J'ai toujours été ponctuel et j'ai respecté les délais . 
-                </Text>
+                {userInfo && userInfo.description && <Text style={styles.description}>
+                {userInfo.description}
+                </Text>}
+             
                 <Text style={styles.titles}>
-                    CV
-                </Text>
-                <TouchableOpacity onPress={() => openBrowserAsync("https://www.africau.edu/images/default/sample.pdf")} style={styles.downloadcv}>
-                    <Text>Download CV</Text>
-                </TouchableOpacity>
-                <Text style={styles.titles}>
-                    Offres d'emploi qui ont été publiées:
+                Services terminés:
                 </Text>
                 <View style={styles.listratingcontainer}>
-                    <FlatList data={menuItemsToDisplay}
+                    {userRatings && <FlatList data={userRatings}
                         keyExtractor={(item) => item.id}
                         renderItem={renderItem}>
 
-                    </FlatList>
+                    </FlatList>}
 
                 </View>
             </View>
@@ -121,7 +179,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     containerflatlist: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems:"center",
+        marginBottom:10
+        
     },
     goback:{
         marginTop:35,
@@ -140,12 +201,13 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         paddingLeft: 26,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom:10
     },
     textrating: {
         fontSize: 16,
-        paddingLeft: 27,
-        marginTop: 10,
+
+
 
 
     },
@@ -181,11 +243,13 @@ const styles = StyleSheet.create({
 
     },
     reviewcontainer: {
-        flexDirection: 'row'
+        flexDirection: 'column',
+        alignItems:"center",
+
     },
     star: {
         paddingLeft: 12,
-        marginTop: 12,
+
         color: '#D5AB55'
     },
     numberating: {
@@ -195,7 +259,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     titles: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
         paddingBottom: 4,
         color: '#0e7676'

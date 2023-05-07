@@ -55,7 +55,6 @@ export default function ServiceSeeker3({ navigation }) {
       const type = asset.uri.substring(asset.uri.lastIndexOf('.') + 1).toLowerCase();
       if (type === 'jpg' || type === 'jpeg') {
         let base64 = await convertToBase64(asset.uri);
-        console.log(base64);
         setImageUri(base64);
       } else {
         alert('Please select a JPG image.');

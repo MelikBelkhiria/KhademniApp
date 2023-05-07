@@ -40,10 +40,8 @@ export default function Login({ navigation }) {
   
       const decodedToken = jwtDecode(token);
 
-      console.log(decodedToken);
 
       const userType = decodedToken.userType;
-      console.log('User Type in front-end:', userType); // Add this line
 
       if (userType === 'employer') {
         navigation.navigate('DrawNavi', { userType: 'employer' });

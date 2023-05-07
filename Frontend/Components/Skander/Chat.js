@@ -222,8 +222,6 @@ const Chat = () => {
 
       // join the chat room
       if (userType === 'employer') {
-        console.log("Selected applicant:", selectedApplicant);
-console.log("Selected service:", selectedService);
 
         socket.emit("joinChat", {
           serviceId: selectedService.service_id,

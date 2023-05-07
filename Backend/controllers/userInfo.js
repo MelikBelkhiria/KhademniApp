@@ -6,7 +6,7 @@ exports.getUserInfo = (req, res) => {
   const decodedToken = jwt.verify(token, 'your_jwt_secret');
   const userId = decodedToken.id;
 
-  db.query("SELECT email, full_name, phone_number, address, interests, TO_BASE64(profile_pic) AS profile_pic_base64, created_at, description FROM users WHERE user_id = ?", [userId], (err, results) => {
+  db.query("SELECT email, full_name, phone_number, address, interests, TO_BASE64(profile_pic) AS profile_pic_base64, created_at, description,user_average FROM users WHERE user_id = ?", [userId], (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).json({ message: 'An error occurred while retrieving user information.' });
@@ -22,7 +22,8 @@ exports.getUserInfo = (req, res) => {
           interests: results[0].interests,
           profile_pic: `data:image/jpg;base64,${results[0].profile_pic_base64}`,
           created_at: results[0].created_at,
-          description: results[0].description
+          description: results[0].description,
+          user_average: results[0].user_average
         };
         res.status(200).json(userInfo);
       }

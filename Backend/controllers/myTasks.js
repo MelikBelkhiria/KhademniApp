@@ -50,7 +50,6 @@ exports.displayTasks = (req, res) => {
       res.status(500).send('Error querying database');
       return;
     }
-    console.log("these are", results)
     res.json(results);
   });
 };
