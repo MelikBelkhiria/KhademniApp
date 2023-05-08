@@ -60,6 +60,7 @@ const Notifications = ({ navigation }) => {
           });
 
           setNotifications(formattedData);
+          console.log(formattedData)
           setFilteredNotifications(formattedData);
         })
         .catch((error) => {
@@ -108,7 +109,7 @@ const Notifications = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.15, backgroundColor: "white", justifyContent: "center", alignItems: "center", borderBottomWidth: 0.2, borderBottomColor: "grey" }}>
         <View style={{ backgroundColor: "white", width: "90%", height: "50%", display: "flex", flexDirection: "row", borderRadius: 10, justifyContent: "center", alignItems: "center", paddingLeft: 5 }}>
-          <Text style={{ backgroundColor: urgentSelected ? "#ACAEBE" : "white", width: "50%", height: "80%", textAlign: "center", textAlignVertical: "center", borderRadius: 10, color: urgentSelected ? "white" : "black", fontWeight: "bold" ,fontSize:30}} onPress={handleAllPress}>Notifications</Text>
+          <Text style={{ backgroundColor: urgentSelected ? "#ACAEBE" : "white", width: "100%", height: "80%", textAlign: "center", textAlignVertical: "center", borderRadius: 10, color: urgentSelected ? "white" : "black", fontWeight: "bold" ,fontSize:30}} onPress={handleAllPress}>Notifications</Text>
 
         </View>
       </View>

@@ -21,6 +21,7 @@ import DrawNavi from "./Components/Ahmed/drawernav";
 import Tabnav from './Components/Ahmed/tabnav';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Rating from "./Components/Skander/Rating"
+import { setLogLevel } from 'react-native-log-level';
 
 
 

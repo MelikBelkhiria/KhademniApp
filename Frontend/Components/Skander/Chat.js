@@ -45,6 +45,8 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
         .then((response) => response.data)
         .then((data) => {
           setServices(data);
+          console.log(JSON.stringify(data).slice(0, 300))
+
         })
         .catch((error) => {
           console.error(error);
@@ -64,25 +66,26 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
             onPress={() => {
               if (userType === 'employer') {
                 setServiceHide(true);
-                setSelectedApplicant({applicantId: applicant.job_seeker_id})
+                setSelectedApplicant({ applicantId: applicant.job_seeker_id })
                 setSelectedService({
                   name: applicant.applicant_name,
                   profile_pic_url: applicant.applicant_profile_pic,
                   service_id: item.service_id,
                   recipientId: applicant.job_seeker_id,
                 });
+
               }
             }}
           >
-            <Text style={{fontSize:18,color:"white"}}>
+            <Text style={{ fontSize: 18, color: "white" }}>
               {applicant.applicant_name}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
     );
-    
-  
+
+
     return (
       <TouchableOpacity
         style={styling.card}
@@ -93,7 +96,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
             profile_pic_url: userType === 'employer' ? item.applicant_profile_pic : item.employer_profile_pic,
             service_id: item.service_id, // add service_id to selected service
             recipientId: userType === 'employer' ? item.job_seeker_id : item.employer_id, // add recipientId to selected service
-          });
+          })
         }}
       >
         <Text style={styling.cardTitle}>{item.title}</Text>
@@ -101,7 +104,7 @@ const Service = ({ setServiceHide, setSelectedService, setSelectedApplicant }) =
       </TouchableOpacity>
     );
   };
-  
+
 
   return (
     <ImageBackground source={require("../../assets/image5.png")} style={styling.container}>
@@ -169,9 +172,9 @@ const styling = StyleSheet.create({
     borderColor: "#4DAF8C",
 
 
- }
-  
-  
+  }
+
+
 });
 
 const BackArrow = ({ onPress }) => (
@@ -185,10 +188,10 @@ const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [lastSender, setLastSender] = useState('');
-  const [selectedApplicant,setSelectedApplicant]= useState({applicantId: ""})
+  const [selectedApplicant, setSelectedApplicant] = useState({ applicantId: "" })
   const [selectedService, setSelectedService] = useState({ name: '', profile_pic_url: '' });
   const [token, setToken] = useState(null);
-
+  const [userType, setUserType] = useState()
 
   const handleBackPress = () => {
     setServiceHide(false);
@@ -200,10 +203,11 @@ const Chat = () => {
 
       // fetch token from storage
       const token = await AsyncStorage.getItem("authToken");
-      console.log("the",jwtDecode(token))
-      const userType= jwtDecode(token).userType
-      const id= jwtDecode(token).id
-      console.log("this is",userType)
+      console.log("the", jwtDecode(token))
+      const userType = jwtDecode(token).userType
+      setUserType(userType)
+      const id = jwtDecode(token).id
+      console.log("this is", userType)
       console.log("this is ", id)
       if (!token) {
         console.error("No auth token found");
@@ -228,8 +232,8 @@ const Chat = () => {
           seekerId: selectedApplicant.applicantId,
         });
       } else if (userType === 'job_seeker') {
-        console.log("chatidseek",id)
-        console.log( selectedService.service_id)
+        console.log("chatidseek", id)
+        console.log(selectedService.service_id)
         socket.emit("joinChat", {
           serviceId: selectedService.service_id,
           seekerId: id,
@@ -264,11 +268,11 @@ const Chat = () => {
     if (selectedService.service_id) {
       fetchChatHistory();
     }
-  }, [selectedService,selectedApplicant]);
+  }, [selectedService, selectedApplicant]);
 
   const handleSendMessage = async () => {
     if (message.trim()) {
-      const api = axios.create({ 
+      const api = axios.create({
         baseURL: 'http://192.168.1.45:3001'
       });
 
@@ -304,9 +308,9 @@ const Chat = () => {
       const api = axios.create({
         baseURL: 'http://192.168.1.45:3001'
       });
-  
+
       const token = await AsyncStorage.getItem('authToken');
-      const userType= jwtDecode(token).userType
+      const userType = jwtDecode(token).userType
 
 
       let response;
@@ -323,7 +327,7 @@ const Chat = () => {
           },
         });
       }
-      
+
       const data = response.data.map((msg) => ({
         ...msg,
         senderId: msg.sender_id,
@@ -333,18 +337,22 @@ const Chat = () => {
       console.error('Error fetching chat history:', error);
     }
   };
-  
+
 
   return (
     <View style={styles.container}>
       {serviceHide ?
         <><View style={{ display: "flex", flexDirection: "row", margin: 10, justifyContent: "space-around", alignItems: "center", borderWidth: 1, borderRadius: 20, borderColor: "#4DAF8C" }}>
           <BackArrow onPress={handleBackPress} />
-
-          <Image
+          {<Text>{console.log(JSON.stringify(selectedService).slice(0, 300))
+          }</Text>}{ }
+          {userType === "employer" ? <Image
             style={{ borderRadius: 50, width: 90, height: 90 }}
             source={{ uri: selectedService.profile_pic_url }}
-          ></Image>
+          ></Image>: <Image
+          style={{ borderRadius: 50, width: 90, height: 90 }}
+          source={{ uri: `data:image/jpg;base64,${selectedService.profile_pic_url }`}}
+        ></Image>}
           <Text style={{ fontSize: 20 }}>{selectedService.name}</Text>
 
         </View>

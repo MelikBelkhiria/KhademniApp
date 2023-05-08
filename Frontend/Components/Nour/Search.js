@@ -19,7 +19,7 @@ const JobCard = ({ job, navigation }) => {
             title: job.title,
             price: job.price,
             imageURI: `data:image/jpg;base64,${job.profile_pic_base64}`,
-            numberOfStars: job.numberOfStars,
+            numberOfStars: job.user_average,
             description: job.description,
             created_at: job.created_at,
             employer: job.full_name,
@@ -31,7 +31,7 @@ const JobCard = ({ job, navigation }) => {
                 <Image resizeMode='cover' source={{ uri: `data:image/jpg;base64,${job.profile_pic_base64}`}} style={styles.image} />
                 <View style={styles.starscontainer}>
                     <Ionicons style={styles.star} size={17} name="star"></Ionicons>
-                    <Text style={styles.nbrstars} > {job.numberOfStars} </Text>
+                    <Text style={styles.nbrstars} > {job.user_average} </Text>
                 </View>
             </View>
             <View style={styles.jobInfo}>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 45,
         backgroundColor: '#e7f6f5'
-        , marginTop: 50
+        , marginTop: 5
     },
     container: {
         flex: 1,
@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     },
     list: {
         padding: 20,
+        marginTop:50
     },
     card: {
         height: 120,
@@ -291,15 +292,16 @@ const styles = StyleSheet.create({
     },
     a: {
         flexDirection: 'row',
-        alignItems: "center",
         shadowOffset: {
             width: 0,
             height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginTop: 0,
-        marginBottom: 20
+        marginTop: 70,
+        marginBottom: 20,
+        position:"absolute",
+        zIndex:10
 
     },
     b: {

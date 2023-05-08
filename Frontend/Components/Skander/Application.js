@@ -9,7 +9,7 @@ const Application = ({ navigation, route }) => {
   const formatDate = (dateString) => {
     return moment(dateString).format('MMMM Do YYYY');
   };
-  
+
 
   const { title, price, imageURI, numberOfStars, description, created_at, employer, location, field, serviceId } = route.params;
 
@@ -49,25 +49,29 @@ const Application = ({ navigation, route }) => {
         </View>
       </View>
       <View style={{ height: 10 }}></View>
-      <View style={{ flex: 0.25, backgroundColor: "white", flexDirection: "row",flexWrap:"wrap", padding: 20,justifyContent:"space-between" }}>
-        <View style={{ marginBottom: 30 }}>
-          <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Posté le</Text>
-          <Text>{formatDate(created_at)}</Text>
+      <View style={{ flex: 0.25, backgroundColor: "white", padding: 20 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
+          <View style={{ flex: 1, marginRight: 10 }}>
+            <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Posté le</Text>
+            <Text>{formatDate(created_at)}</Text>
+          </View>
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Prix</Text>
+            <Text>{price}TND</Text>
+          </View>
         </View>
-        <View>
-          <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>Prix</Text>
-          <Text>{price}TND</Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flex: 1, marginRight: 10 }}>
+            <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>DOMAINE</Text>
+            <Text style={{ textAlign: "center", backgroundColor: "#D9DCE1", borderRadius: 20, width: "100%" }}>{field}</Text>
+          </View>
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>ADDRESSE</Text>
+            <Text>{location}</Text>
+          </View>
         </View>
-        <View style={{ marginBottom: 30, width: 100 }}>
-          <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>DOMAINE</Text>
-          <Text style={{ textAlign: "center", backgroundColor: "#D9DCE1", borderRadius: 20, width: "100%" }}>{field}</Text>
-        </View>
-        <View>
-          <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 5 }}>ADDRESSE</Text>
-          <Text>{location}</Text>
-        </View>
-
       </View>
+
       <View style={{ height: 10 }}></View>
       <View style={{ flex: 0.3, backgroundColor: "white", padding: 20 }}>
         <Text style={{ color: "grey", fontWeight: "bold", marginBottom: 10 }}>DESCRIPTION DU SERVICE</Text>

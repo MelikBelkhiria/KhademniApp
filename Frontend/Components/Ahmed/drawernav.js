@@ -106,7 +106,7 @@ export default function DrawNavi({ navigation, }) {
       screenOptions={({ route }) => ({
         drawerIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === 'Tabnav') {
+          if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           }
           if (route.name === 'Help&Support') {
@@ -130,7 +130,7 @@ export default function DrawNavi({ navigation, }) {
       })}
     >
 
-      <Drawer.Screen name="Tabnav" component={Tabnav} options={{
+      <Drawer.Screen name="Home" component={Tabnav} options={{
         headerTitle: " Khaddemni", headerTitleStyle: { fontSize: 33 }, headerStyle:
         {
           backgroundColor: 'white',
